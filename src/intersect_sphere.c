@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	normal_sphere(t_ray *r, t_sphere *s, t_vec3 *n)
 {

@@ -6,13 +6,11 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 15:35:03 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/18 15:40:25 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/25 19:47:26 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
-
-#include <stdio.h>
+#include "rt.h"
 
 void	display_usage(char *av)
 {
@@ -31,6 +29,8 @@ int		main(int ac, char **av)
 		if (!data)
 			ft_error("Malloc Error");
 		parse_file(data, av[1]);
+		create_input_thread(data);
+		display_help();
 		draw_everything(data);
 	}
 	else

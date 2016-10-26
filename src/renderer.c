@@ -6,40 +6,11 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 04:47:42 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/22 22:48:56 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/25 19:18:23 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
-
-void	ray_trace(t_data *d, t_ray r, float coef, int depth)
-{
-	t_list	*curr;
-	float	t;
-	int		type;
-
-	d->scene->coef = coef;
-	while (depth < 1 && d->scene->coef > 0.0)
-	{
-		t = 30000;
-		curr = d->scene->objects;
-		d->scene->closest = NULL;
-		type = NONE;
-		while (curr)
-		{
-			if (intersect_shape(&r, curr->content, curr->content_size, &t))
-				d->scene->closest = curr;
-			curr = curr->next;
-		}
-		if (d->scene->closest)
-		{
-			find_light(d, t, curr, &r);
-			depth++;
-		}
-		else
-			break ;
-	}
-}
+#include "rt.h"
 
 void	draw_screen(t_data *d)
 {
@@ -64,27 +35,29 @@ void	draw_screen(t_data *d)
 		ft_vec_mult_mat(&point, global_matrix, &point);
 		sub_vect(&point, &r.start, &r.dir);
 		normalize_vector(&r.dir);
-		ray_trace(d, r, 1.0, 0);
-		put_pixel(d, (z % d->scene->size.x), (z / d->scene->size.x),
-			d->scene->color);
+		d->scene->coef = 1.0;
+		ray_trace(d, r, 0);
+		d->image[(z / d->scene->size.x)][(z % d->scene->size.x)] = d->scene->color;
 	}
 }
 
 void	draw_reload(t_data *d)
 {
+	d->expired = 0;
+	draw_screen(d);
 	if (d->img)
 		mlx_destroy_image(d->mlx, d->img);
 	d->img =
 		mlx_new_image(d->mlx, d->scene->size.x + 100, d->scene->size.y + 100);
 	d->pixel_img =
 		mlx_get_data_addr(d->img, &(d->bpp), &(d->s_line), &(d->ed));
-	draw_screen(d);
+	post_process(d);
 	mlx_put_image_to_window(d->mlx, d->win, d->img, 0, 0);
 }
 
 int		expose_hook(t_data *d)
 {
-	if (d->img)
+	if (d->img && !d->expired)
 		mlx_put_image_to_window(d->mlx, d->win, d->img, 0, 0);
 	else
 		draw_reload(d);
@@ -93,9 +66,16 @@ int		expose_hook(t_data *d)
 
 void	draw_everything(t_data *d)
 {
+	int y;
+
 	d->mlx = mlx_init();
 	d->win = mlx_new_window(d->mlx, d->scene->size.x,
 		d->scene->size.y, d->scene->name);
+	d->image = ft_memalloc(sizeof(t_rgb) * d->scene->size.y);
+	y = -1;
+	while (++y < d->scene->size.y)
+		d->image[y] = ft_memalloc(sizeof(t_rgb) * d->scene->size.x);
+	d->scene->maxdepth = (d->scene->maxdepth) ? d->scene->maxdepth : 16;
 	mlx_expose_hook(d->win, expose_hook, d);
 	mlx_hook(d->win, 2, 3, key_hook, d);
 	mlx_loop(d->mlx);

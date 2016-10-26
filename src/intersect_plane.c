@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	normal_plane(t_ray *r, t_plane *p, t_vec3 *n)
 {

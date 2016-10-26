@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/22 22:46:15 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/25 18:07:56 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include <stdlib.h>
 # include <math.h>
+# include <pthread.h>
 # define ABS(x) ((x > 0) ? x : x * -1)
 # define SQ(x) (x * x)
 
@@ -65,14 +66,12 @@ typedef struct	s_cylinder
 {
 	t_props	props;
 	float	radius;
-	float	height;
 }				t_cylinder;
 
 typedef struct	s_cone
 {
 	t_props	props;
 	float	radius;
-	float	height;
 }				t_cone;
 
 typedef struct	s_sphere
@@ -104,19 +103,28 @@ typedef struct	s_scene
 	t_light	current_light;
 	t_ray	light_ray;
 	t_rgb	color;
+	int		maxdepth;
+	float	dist;
 	float	coef;
+	char	aa;
+	char	changed;
 }				t_scene;
 
 typedef struct	s_data
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*pixel_img;
-	int		bpp;
-	int		s_line;
-	int		ed;
-	t_scene *scene;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*pixel_img;
+	int			bpp;
+	int			s_line;
+	int			ed;
+	char		expired;
+	char		joining;
+	t_rgb		**image;
+	t_scene 	*scene;
+	pthread_t	*input_thread;
+	pthread_t	*render_thread;
 }				t_data;
 
 enum			e_object

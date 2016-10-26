@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_extras.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhurd <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/23 04:07:27 by mhurd             #+#    #+#             */
 /*   Updated: 2016/10/23 04:07:28 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	set_radius(t_list *list, void *obj, int type)
 {

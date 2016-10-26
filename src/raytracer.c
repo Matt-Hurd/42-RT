@@ -10,58 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
-void	calc_light(t_data *d, t_list *curr, t_ray r, t_vec3 n)
+void	ray_trace(t_data *d, t_ray r, int depth)
 {
-	int		obscured;
-	t_vec3	dist;
+	t_list	*curr;
 	float	t;
-	t_list	*curr2;
 
-	obscured = 0;
-	d->scene->current_light = *(t_light *)curr->content;
-	sub_vect(&d->scene->current_light.props.pos, &r.start, &dist);
-	t = sqrtf(dot_vect(&dist, &dist));
-	if (!(dot_vect(&n, &dist) <= 0.0f || t <= 0.0))
+	t = 30000;
+	curr = d->scene->objects;
+	d->scene->closest = NULL;
+	while (curr)
 	{
-		d->scene->light_ray.start = r.start;
-		normalize_vector(&dist);
-		d->scene->light_ray.dir = dist;
-		curr2 = d->scene->objects;
-		while (curr2 && !obscured)
-		{
-			if (intersect_shape(&d->scene->light_ray,
-				curr2->content, curr2->content_size, &t))
-				obscured = 1;
-			curr2 = curr2->next;
-		}
-		if (!obscured)
-			color_point(d, n, &d->scene->color, d->scene->coef);
+		if (intersect_shape(&r, curr->content, curr->content_size, &t))
+			d->scene->closest = curr;
+		curr = curr->next;
 	}
-}
-
-void	color_point(t_data *d, t_vec3 n, t_rgb *color, float coef)
-{
-	float lambert;
-	float gloss;
-
-	lambert = dot_vect(&d->scene->light_ray.dir, &n) * coef;
-	gloss = ((t_sphere *)d->scene->closest->content)->props.reflect > 0
-		? dot_vect(&d->scene->light_ray.dir, &n) : 0;
-	gloss = gloss > 0.95 ? (gloss - 0.95) * 10 : 0;
-	color->r += MAX(0, SQ(gloss));
-	color->g += MAX(0, SQ(gloss));
-	color->b += MAX(0, SQ(gloss));
-	color->r += lambert * d->scene->current_light.props.color.r *
-		((t_sphere *)d->scene->closest->content)->props.color.r *
-		d->scene->current_light.props.radiance;
-	color->g += lambert * d->scene->current_light.props.color.g *
-		((t_sphere *)d->scene->closest->content)->props.color.g *
-		d->scene->current_light.props.radiance;
-	color->b += lambert * d->scene->current_light.props.color.b *
-		((t_sphere *)d->scene->closest->content)->props.color.b *
-		d->scene->current_light.props.radiance;
+	if (d->scene->closest)
+	{
+		find_light(d, t, curr, &r);
+		if (depth < d->scene->maxdepth && d->scene->coef > 0)
+		{
+			ray_trace(d, r, depth + 1);
+		}
+	}
 }
 
 void	find_light(t_data *d, float t, t_list *curr, t_ray *r)
@@ -77,12 +49,60 @@ void	find_light(t_data *d, float t, t_list *curr, t_ray *r)
 	while (curr)
 	{
 		if (curr->content_size == LIGHT)
-			calc_light(d, curr, *r, n);
+			calc_light(d, curr, r, n);
 		curr = curr->next;
 	}
-	scale_vector(((d->scene->closest->content_size == SPHERE) ? 1 : 2) *
-		dot_vect(&r->dir, &n), &n, temp);
+	scale_vector(2 * dot_vect(&r->dir, &n), &n, temp);
 	sub_vect(&r->dir, temp, &r->dir);
 	free(temp);
 	d->scene->coef *= ((t_sphere *)d->scene->closest->content)->props.reflect;
+}
+
+void	calc_light(t_data *d, t_list *curr, t_ray *r, t_vec3 n)
+{
+	int		obscured;
+	t_vec3	dist;
+	float	t;
+	t_list	*curr2;
+
+	obscured = 0;
+	d->scene->current_light = *(t_light *)curr->content;
+	sub_vect(&d->scene->current_light.props.pos, &r->start, &dist);
+	t = sqrtf(dot_vect(&dist, &dist));
+	if (!(dot_vect(&n, &dist) <= 0.0f || t <= 0.0))
+	{
+		d->scene->light_ray.start = r->start;
+		normalize_vector(&dist);
+		d->scene->light_ray.dir = dist;
+		curr2 = d->scene->objects;
+		while (curr2 && !obscured)
+		{
+			if (intersect_shape(&d->scene->light_ray,
+				curr2->content, curr2->content_size, &t))
+				obscured = 1;
+			curr2 = curr2->next;
+		}
+		if (!obscured)
+			color_point(d, n, &d->scene->color);
+	}
+}
+
+void	color_point(t_data *d, t_vec3 n, t_rgb *color)
+{
+	float lambert;
+
+	lambert = dot_vect(&d->scene->light_ray.dir, &n) * d->scene->coef;
+	color->r += lambert * d->scene->current_light.props.color.r *
+	((t_sphere *)d->scene->closest->content)->props.color.r *
+	d->scene->current_light.props.radiance * (1.0 -
+		((t_sphere *)d->scene->closest->content)->props.reflect);
+	color->g += lambert * d->scene->current_light.props.color.g *
+	((t_sphere *)d->scene->closest->content)->props.color.g *
+	d->scene->current_light.props.radiance * (1.0 -
+		((t_sphere *)d->scene->closest->content)->props.reflect);
+	color->b += lambert * d->scene->current_light.props.color.b *
+	((t_sphere *)d->scene->closest->content)->props.color.b *
+	d->scene->current_light.props.radiance * (1.0 -
+		((t_sphere *)d->scene->closest->content)->props.reflect);
+	d->scene->coef = lambert;
 }

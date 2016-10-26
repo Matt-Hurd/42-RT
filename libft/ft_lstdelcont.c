@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 04:55:43 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/06 04:56:02 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/25 19:37:50 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	ft_lstdelcont(t_list **alst, void *cont)
 			free(cont);
 			return ;
 		}
+		prev = current;
 		current = current->next;
 	}
-	free(*alst);
-	*alst = NULL;
 }

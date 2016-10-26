@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtv1.h                                             :+:      :+:    :+:   */
+/*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:06:16 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/22 21:45:24 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/25 19:47:12 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RTV1_H
-# define RTV1_H
+#ifndef RT_H
+# define RT_H
 # include "mlx.h"
 # include "libft.h"
 # include "libgfx.h"
@@ -56,11 +56,14 @@ void		parse_plane(t_data *d, t_list *list);
 void		parse_props(t_list *list, t_props *props);
 void		parse_light(t_data *d, t_list *list);
 void		normalize_vector(t_vec3 *v);
-void		color_point(t_data *d, t_vec3 n, t_rgb *color, float coef);
-void		calc_light(t_data *d, t_list *curr, t_ray r, t_vec3 n);
+void		calc_light(t_data *d, t_list *curr, t_ray *r, t_vec3 n);
 void		clear_color(t_rgb *color);
 void		set_radius(t_list *list, void *obj, int type);
 void		find_light(t_data *d, float t, t_list *curr, t_ray *r);
+void		color_point(t_data *d, t_vec3 n, t_rgb *color);
+void		post_process(t_data *d);
+void		create_input_thread(t_data *d);
+void		ray_trace(t_data *d, t_ray r, int depth);
 
 int			intersect_shape(t_ray *r, void *s, int type, float *t);
 int			intersect_cylinder(t_ray *r, t_cylinder *c, float *t);
@@ -73,5 +76,21 @@ void		normal_sphere(t_ray *r, t_sphere *s, t_vec3 *n);
 void		normal_plane(t_ray *r, t_plane *p, t_vec3 *n);
 void		normal_cylinder(t_ray *r, t_cylinder *c, t_vec3 *n);
 void		normal_cone(t_ray *r, t_cone *c, t_vec3 *n);
+
+void		print_vec3(t_vec3 v, float scale);
+void		print_scene_info(t_data *d);
+void		print_RGB(t_rgb rgb);
+void		print_properties(t_props p);
+void		print_sphere_info(t_sphere *sphere);
+void		print_plane_info(t_plane *plane);
+void		print_cone_info(t_cone *cone);
+void		print_cylinder_info(t_cylinder *cylinder);
+void		print_light_info(t_light *light);
+int			parse_misc(char **split, int c, t_data *d);
+int			modify_object(char **s, int c, t_data *d);
+int			add_object(char **s, t_data *d);
+int			del_object(char **s, t_data *d);
+t_list		*get_object(t_data *d, int num);
+void		display_help();
 
 #endif

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	normal_cylinder(t_ray *r, t_cylinder *cy, t_vec3 *n)
 {
@@ -47,7 +47,7 @@ int		intersect_cylinder(t_ray *r, t_cylinder *cy, float *t)
 		a[1] = (-a[1] - sqrtf(discr)) / (2 * dot_vect(&oc, &oc));
 		a[0] = ((MIN(a[2], a[1]) < 0) ? MAX(a[2], a[1]) : MIN(a[2], a[1]));
 	}
-	if (a[0] > 0.01 && *t > a[0])
+	if (a[0] > 0.1 && *t > a[0])
 		*t = a[0];
 	return (*t == a[0]);
 }

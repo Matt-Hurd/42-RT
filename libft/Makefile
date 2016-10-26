@@ -1,5 +1,5 @@
 NAME =	libft.a
-FLAGS =	-Wall -Wextra -Werror
+FLAGS =	-Wall -Wextra -Werror -O3
 CC = 	gcc
 ODIR =	bin/
 IDIR = 

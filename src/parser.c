@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	parse_triple(char *triple, t_vec3 *ref)
 {
@@ -38,6 +38,10 @@ void	set_scene(t_data *d, char **buff)
 		parse_triple(buff[1], &d->scene->cam_pos);
 	else if (ft_strequ(buff[0], "cameraRot"))
 		parse_triple(buff[1], &d->scene->cam_rot);
+	else if (ft_strequ(buff[0], "aa"))
+		d->scene->aa = ft_atoi(buff[1]);
+	else if (ft_strequ(buff[0], "depth"))
+		d->scene->maxdepth = ft_atoi(buff[1]);
 }
 
 void	parse_scene(t_data *d, t_list *list)

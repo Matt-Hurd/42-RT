@@ -6,11 +6,11 @@
 #    By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 19:34:56 by mhurd             #+#    #+#              #
-#    Updated: 2016/10/22 20:50:42 by mhurd            ###   ########.fr        #
+#    Updated: 2016/10/25 19:53:36 by mhurd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= RTV1
+NAME	= RT
 
 SRC		= main.c \
 		  parser.c \
@@ -25,12 +25,19 @@ SRC		= main.c \
 		  intersect_cylinder.c \
 		  intersect_plane.c \
 		  intersect_cone.c \
-		  helpers.c
+		  helpers.c \
+		  post.c \
+		  /user_input/user_input.c \
+		  /user_input/print_objects.c \
+		  /user_input/print_scene.c \
+		  /user_input/parse_misc.c \
+		  /user_input/modify_object.c \
+		  /user_input/add_object.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -O3
+CFLAGS	= -Wall -Wextra -Werror -O3 -march=native -funroll-loops
 
 LIBFT	= ./libft/libft.a
 LIBINC	= -I./libft
@@ -47,6 +54,7 @@ LIBGFXLINK	= -L./libgfx -lgfx
 SRCDIR	= ./src/
 INCDIR	= ./includes/
 OBJDIR	= ./obj/
+OBJDIR2	= ./obj/user_input/
 
 all: obj libft mlx libgfx $(NAME)
 
@@ -57,6 +65,7 @@ gfx:
 
 obj:
 	mkdir -p $(OBJDIR)
+	mkdir -p $(OBJDIR2)
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(LIBINC) $(MLXINC) $(LIBGFXINC) -I $(INCDIR) -o $@ -c $<
