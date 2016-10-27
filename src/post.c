@@ -6,13 +6,13 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 23:18:37 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/25 20:01:43 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/25 22:33:29 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 
-t_rgb		*anti_alias(t_data *d, int y, int x, t_rgb *new)
+t_rgb	*anti_alias(t_data *d, int y, int x, t_rgb *new)
 {
 	int		yi;
 	int		xi;
@@ -21,10 +21,10 @@ t_rgb		*anti_alias(t_data *d, int y, int x, t_rgb *new)
 
 	yi = MAX(-1, y - 2);
 	count = 0;
-	while (++yi < MIN(d->scene->size.y, y + 2))
+	while (++yi < MIN(d->s->size.y, y + 2))
 	{
 		xi = MAX(-1, x - 2);
-		while (++xi < MIN(d->scene->size.x, x + 2))
+		while (++xi < MIN(d->s->size.x, x + 2))
 		{
 			weight = (xi == x && yi == y) ? 5 : 1;
 			new->r += d->image[yi][xi].r * weight;
@@ -46,12 +46,12 @@ void	post_process(t_data *d)
 	t_rgb	new;
 
 	y = -1;
-	while (++y < d->scene->size.y)
+	while (++y < d->s->size.y)
 	{
 		x = -1;
-		while (++x < d->scene->size.x)
+		while (++x < d->s->size.x)
 		{
-			if (d->scene->aa)
+			if (d->s->aa)
 				anti_alias(d, y, x, &new);
 			else
 				new = d->image[y][x];

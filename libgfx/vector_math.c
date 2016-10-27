@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 20:34:51 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/19 20:01:19 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/26 04:00:23 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ float	dot_vect(t_vec3 *v1, t_vec3 *v2)
 	return (v1->x * v2->x + v1->y * v2->y + v1->z * v2->z);
 }
 
-void	ft_add_vector(t_vec3 *v1, t_vec3 *v2, t_vec3 *d)
+void	add_vect(t_vec3 *v1, t_vec3 *v2, t_vec3 *d)
 {
 	d->x = v1->x + v2->x;
 	d->y = v1->y + v2->y;

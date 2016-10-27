@@ -6,19 +6,19 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:59:52 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/25 19:28:17 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/26 04:00:23 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 
-t_list	*get_object(t_data *d, int num)
+t_list		*get_object(t_data *d, int num)
 {
 	int		x;
 	t_list	*ret;
 
 	x = 0;
-	ret = d->scene->objects;
+	ret = d->s->objects;
 	while (ret)
 	{
 		++x;
@@ -70,12 +70,14 @@ static int	set_props(char **s, t_sphere *obj)
 		obj->props.color.b = (float)ft_atoi(s[3]) / 255;
 	else if (ft_strequ(s[2], "reflect"))
 		obj->props.reflect = (float)ft_atoi(s[3]) / 100;
+	else if (ft_strequ(s[2], "gloss"))
+		obj->props.gloss = (float)ft_atoi(s[3]) / 100;
 	else if (ft_strstr(s[2], "rot"))
 		return (change_rotation(obj, ft_atoi(s[3]) * M_PI / 180, s[2][3]));
 	else if (ft_strstr(s[2], "radiance"))
 		obj->props.radiance = (float)ft_atoi(s[3]) / 100;
 	else
-		return(0);
+		return (0);
 	return (1);
 }
 
@@ -90,7 +92,7 @@ static int	set_values(char **s, int c, t_list *obj, t_data *d)
 		return (set_props(s, obj->content));
 }
 
-int		modify_object(char **s, int c, t_data *d)
+int			modify_object(char **s, int c, t_data *d)
 {
 	int		num;
 	t_list	*obj;

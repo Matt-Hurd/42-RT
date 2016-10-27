@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:06:16 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/25 19:47:12 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/27 01:00:25 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <errno.h>
+
+
+
+
+#include <stdio.h>
+
+
+
+
+
+
 
 /*
 ** KEYS
@@ -56,14 +67,16 @@ void		parse_plane(t_data *d, t_list *list);
 void		parse_props(t_list *list, t_props *props);
 void		parse_light(t_data *d, t_list *list);
 void		normalize_vector(t_vec3 *v);
-void		calc_light(t_data *d, t_list *curr, t_ray *r, t_vec3 n);
+void		calc_light(t_data *d, t_recurse *rec, t_list *curr);
 void		clear_color(t_rgb *color);
 void		set_radius(t_list *list, void *obj, int type);
-void		find_light(t_data *d, float t, t_list *curr, t_ray *r);
-void		color_point(t_data *d, t_vec3 n, t_rgb *color);
+void		find_light(t_data *d, float t, t_recurse *rec);
+void		color_point(t_recurse *rec);
 void		post_process(t_data *d);
 void		create_input_thread(t_data *d);
-void		ray_trace(t_data *d, t_ray r, int depth);
+void		ray_trace(t_data *d, t_recurse *rec);
+float		calc_blinn(t_recurse *rec);
+void		handle_trans(t_data *d, t_recurse *rec);
 
 int			intersect_shape(t_ray *r, void *s, int type, float *t);
 int			intersect_cylinder(t_ray *r, t_cylinder *c, float *t);
@@ -91,6 +104,6 @@ int			modify_object(char **s, int c, t_data *d);
 int			add_object(char **s, t_data *d);
 int			del_object(char **s, t_data *d);
 t_list		*get_object(t_data *d, int num);
-void		display_help();
+void		display_help(void);
 
 #endif

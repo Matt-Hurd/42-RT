@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/25 18:07:56 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/27 00:56:44 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct	s_props
 	t_rgb	color;
 	float	reflect;
 	float	radiance;
+	float	trans;
+	float	gloss;
 }				t_props;
 
 typedef struct	s_plane
@@ -91,6 +93,20 @@ typedef struct	s_ray
 	t_vec3 dir;
 }				t_ray;
 
+typedef struct	s_recurse
+{
+	t_list	*closest;
+	t_light	current_light;
+	t_ray	light_ray;
+	t_rgb	color;
+	char	lit;
+	float	coef;
+	t_ray	r;
+	t_vec3	n;
+	int		depth;
+	float	light;
+}				t_recurse;
+
 typedef struct	s_scene
 {
 	char	*name;
@@ -99,15 +115,8 @@ typedef struct	s_scene
 	t_vec3	cam_pos;
 	t_vec3	cam_rot;
 	t_list	*objects;
-	t_list	*closest;
-	t_light	current_light;
-	t_ray	light_ray;
-	t_rgb	color;
 	int		maxdepth;
-	float	dist;
-	float	coef;
 	char	aa;
-	char	changed;
 }				t_scene;
 
 typedef struct	s_data
@@ -122,7 +131,7 @@ typedef struct	s_data
 	char		expired;
 	char		joining;
 	t_rgb		**image;
-	t_scene 	*scene;
+	t_scene		*s;
 	pthread_t	*input_thread;
 	pthread_t	*render_thread;
 }				t_data;
@@ -152,5 +161,5 @@ void			put_pixel(t_data *d, int x, int y, t_rgb color);
 void			sub_vect(t_vec3 *v1, t_vec3 *v2, t_vec3 *d);
 float			dot_vect(t_vec3 *v1, t_vec3 *v2);
 void			scale_vector(float c, t_vec3 *v, t_vec3 *d);
-void			ft_add_vector(t_vec3 *v1, t_vec3 *v2, t_vec3 *d);
+void			add_vect(t_vec3 *v1, t_vec3 *v2, t_vec3 *d);
 #endif

@@ -6,13 +6,13 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:48:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/25 19:46:57 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/25 22:33:37 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 
-void	display_help()
+void	display_help(void)
 {
 	ft_putstr("Valid commands: \n\
 	aa on/off\n\
@@ -39,12 +39,12 @@ int		parse_misc(char **split, int c, t_data *d)
 	{
 		if (ft_strequ(split[0], "aa"))
 		{
-			d->scene->aa = (ft_strequ(split[1], "off")) ? 0 : 1;
+			d->s->aa = (ft_strequ(split[1], "off")) ? 0 : 1;
 			return (1);
 		}
 		else if (ft_strequ(split[0], "depth"))
 		{
-			d->scene->maxdepth = ft_atoi(split[1]);
+			d->s->maxdepth = ft_atoi(split[1]);
 			return (1);
 		}
 	}

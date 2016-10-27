@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:35:53 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/25 18:42:14 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/26 04:00:25 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_vec3(t_vec3 v, float scale)
 	ft_putendl(")");
 }
 
-void	print_RGB(t_rgb rgb)
+void	print_rgb(t_rgb rgb)
 {
 	ft_putstr("(r: ");
 	ft_putnbr(rgb.r * 255);
@@ -36,13 +36,12 @@ void	print_RGB(t_rgb rgb)
 
 void	print_properties(t_props p)
 {
-
 	ft_putstr("Pos: ");
 	print_vec3(p.pos, 1);
 	ft_putstr("Rot: ");
 	print_vec3(p.rot, (180.0 / M_PI));
 	ft_putstr("Color: ");
-	print_RGB(p.color);
+	print_rgb(p.color);
 	ft_putstr("Reflectivity:");
 	ft_putnbr(p.reflect * 100);
 	ft_putstr("\nRadiance:");
@@ -56,7 +55,7 @@ void	print_scene_info(t_data *d)
 	t_list	*a;
 
 	x = 0;
-	a = d->scene->objects;
+	a = d->s->objects;
 	while (a)
 	{
 		ft_putnbr(++x);

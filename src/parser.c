@@ -27,29 +27,29 @@ void	parse_triple(char *triple, t_vec3 *ref)
 void	set_scene(t_data *d, char **buff)
 {
 	if (ft_strequ(buff[0], "name"))
-		d->scene->name = buff[1];
+		d->s->name = buff[1];
 	else if (ft_strequ(buff[0], "width"))
-		d->scene->size.x = ft_atoi(buff[1]);
+		d->s->size.x = ft_atoi(buff[1]);
 	else if (ft_strequ(buff[0], "height"))
-		d->scene->size.y = ft_atoi(buff[1]);
+		d->s->size.y = ft_atoi(buff[1]);
 	else if (ft_strequ(buff[0], "fov"))
-		d->scene->fov = ft_atoi(buff[1]);
+		d->s->fov = ft_atoi(buff[1]);
 	else if (ft_strequ(buff[0], "camera"))
-		parse_triple(buff[1], &d->scene->cam_pos);
+		parse_triple(buff[1], &d->s->cam_pos);
 	else if (ft_strequ(buff[0], "cameraRot"))
-		parse_triple(buff[1], &d->scene->cam_rot);
+		parse_triple(buff[1], &d->s->cam_rot);
 	else if (ft_strequ(buff[0], "aa"))
-		d->scene->aa = ft_atoi(buff[1]);
+		d->s->aa = ft_atoi(buff[1]);
 	else if (ft_strequ(buff[0], "depth"))
-		d->scene->maxdepth = ft_atoi(buff[1]);
+		d->s->maxdepth = ft_atoi(buff[1]);
 }
 
 void	parse_scene(t_data *d, t_list *list)
 {
 	char **buff;
 
-	if (!d->scene)
-		d->scene = (t_scene *)ft_memalloc(sizeof(t_scene));
+	if (!d->s)
+		d->s = (t_scene *)ft_memalloc(sizeof(t_scene));
 	while (list && !ft_strchr(list->content, '['))
 	{
 		if (ft_strchr(list->content, '='))
@@ -62,7 +62,7 @@ void	parse_scene(t_data *d, t_list *list)
 		}
 		list = list->next;
 	}
-	scale_vector(M_PI / 180, &d->scene->cam_rot, &d->scene->cam_rot);
+	scale_vector(M_PI / 180, &d->s->cam_rot, &d->s->cam_rot);
 }
 
 void	parse_list(t_data *d, t_list *list)
@@ -99,8 +99,8 @@ void	parse_file(t_data *d, char *filename)
 		ft_lst_add_back(&list, ft_lstnew(buff, ft_strlen(buff) + 1));
 	if (result < 0)
 		ft_error_unknown();
-	if (!d->scene)
-		d->scene = (t_scene *)ft_memalloc(sizeof(t_scene));
+	if (!d->s)
+		d->s = (t_scene *)ft_memalloc(sizeof(t_scene));
 	parse_list(d, list);
 	close(fd);
 }

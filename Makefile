@@ -6,7 +6,7 @@
 #    By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 19:34:56 by mhurd             #+#    #+#              #
-#    Updated: 2016/10/25 19:53:36 by mhurd            ###   ########.fr        #
+#    Updated: 2016/10/27 00:59:11 by mhurd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC		= main.c \
 		  intersect_cone.c \
 		  helpers.c \
 		  post.c \
+		  handle_trans.c \
 		  /user_input/user_input.c \
 		  /user_input/print_objects.c \
 		  /user_input/print_scene.c \

@@ -15,17 +15,17 @@
 static int	key_hook_rotation(int keycode, t_data *d)
 {
 	if (keycode == KEY_ROT_X_U)
-		d->scene->cam_rot.x += 0.2;
+		d->s->cam_rot.x += 0.2;
 	else if (keycode == KEY_ROT_X_D)
-		d->scene->cam_rot.x -= 0.2;
+		d->s->cam_rot.x -= 0.2;
 	else if (keycode == KEY_ROT_Y_U)
-		d->scene->cam_rot.y += 0.2;
+		d->s->cam_rot.y += 0.2;
 	else if (keycode == KEY_ROT_Y_D)
-		d->scene->cam_rot.y -= 0.2;
+		d->s->cam_rot.y -= 0.2;
 	else if (keycode == KEY_ROT_Z_U)
-		d->scene->cam_rot.z += 0.2;
+		d->s->cam_rot.z += 0.2;
 	else if (keycode == KEY_ROT_Z_D)
-		d->scene->cam_rot.z -= 0.2;
+		d->s->cam_rot.z -= 0.2;
 	else
 		return (0);
 	return (1);
@@ -34,13 +34,13 @@ static int	key_hook_rotation(int keycode, t_data *d)
 static int	key_hook_translation(int keycode, t_data *d)
 {
 	if (keycode == KEY_UP)
-		d->scene->cam_pos.y -= 50;
+		d->s->cam_pos.y -= 50;
 	else if (keycode == KEY_DOWN)
-		d->scene->cam_pos.y += 50;
+		d->s->cam_pos.y += 50;
 	else if (keycode == KEY_LEFT)
-		d->scene->cam_pos.x -= 50;
+		d->s->cam_pos.x -= 50;
 	else if (keycode == KEY_RIGHT)
-		d->scene->cam_pos.x += 50;
+		d->s->cam_pos.x += 50;
 	else
 		return (0);
 	return (1);
@@ -49,9 +49,9 @@ static int	key_hook_translation(int keycode, t_data *d)
 static int	key_hook_scale(int keycode, t_data *d)
 {
 	if (keycode == KEY_ZOOM_IN)
-		d->scene->cam_pos.z += 50;
+		d->s->cam_pos.z += 50;
 	else if (keycode == KEY_ZOOM_OUT)
-		d->scene->cam_pos.z -= 50;
+		d->s->cam_pos.z -= 50;
 	else
 		return (0);
 	return (1);
