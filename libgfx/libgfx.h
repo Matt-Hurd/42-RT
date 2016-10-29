@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 04:42:42 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 08:27:06 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct	s_scene
 	t_vec3	cam_rot;
 	t_list	*objects;
 	int		maxdepth;
+	int		count;
 	char	aa;
 }				t_scene;
 

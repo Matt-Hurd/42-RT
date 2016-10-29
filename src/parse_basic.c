@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 17:14:06 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/28 01:13:16 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 08:10:06 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	parse_props(t_list *list, t_props *props)
 				props->gloss = (float)ft_atoi(buff[1]) / 100;
 			else if (ft_strequ(buff[0], "transparency"))
 				props->trans = (float)ft_atoi(buff[1]) / 100;
+			else if (ft_strequ(buff[0], "density"))
+				props->density = (float)ft_atoi(buff[1]) / 100;
 			else if (ft_strequ(buff[0], "radiance"))
 				props->radiance = (float)ft_atoi(buff[1]) / 100;
 			free(buff);

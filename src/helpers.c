@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 20:32:43 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/27 23:03:23 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 06:57:21 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@ void	parse_color(char *color, t_rgb *ref)
 	ref->r = (float)ft_atoi(buff[0]) / 255;
 	ref->g = (float)ft_atoi(buff[1]) / 255;
 	ref->b = (float)ft_atoi(buff[2]) / 255;
-}
-
-void	clear_color(t_rgb *color)
-{
-	color->r = 0;
-	color->g = 0;
-	color->b = 0;
 }
 
 void	normal_shape(t_ray *r, t_vec3 *n, t_list *s)

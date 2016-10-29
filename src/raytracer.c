@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 22:42:52 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 05:25:52 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 08:27:20 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	find_light(t_data *d, float t, t_recurse *rec)
 	normal_shape(&rec->r, &rec->n, rec->closest);
 	curr = d->s->objects;
 	rec->light = 0;
+	if (((t_sphere *)rec->closest->content)->props.trans > 0)
+		rec->coef *= handle_trans(d, rec);
 	while (curr)
 	{
 		if (curr->content_size == LIGHT)
 			calc_light(d, rec, curr);
 		curr = curr->next;
 	}
-	if (((t_sphere *)rec->closest->content)->props.trans > 0)
-		handle_trans(d, rec);
 	scale_vector(2 * dot_vect(&rec->r.dir, &rec->n), &rec->n, temp);
 	sub_vect(&rec->r.dir, temp, &rec->r.dir);
 	free(temp);

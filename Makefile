@@ -6,7 +6,7 @@
 #    By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 19:34:56 by mhurd             #+#    #+#              #
-#    Updated: 2016/10/29 06:38:41 by mhurd            ###   ########.fr        #
+#    Updated: 2016/10/29 10:43:39 by mhurd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC		= main.c \
 		  helpers.c \
 		  post.c \
 		  handle_trans.c \
+		  manip_colors.c \
 		  /user_input/user_input.c \
 		  /user_input/print_objects.c \
 		  /user_input/print_scene.c \
@@ -38,7 +39,7 @@ SRC		= main.c \
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -O3 -march=native -funroll-loops
 
 LIBFT	= ./libft/libft.a
 LIBINC	= -I./libft

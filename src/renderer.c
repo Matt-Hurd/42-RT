@@ -6,11 +6,27 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 04:47:42 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 06:50:39 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 12:39:45 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**TODO:
+**	Refraction
+**		Find internal intersection
+**		Snell's law
+**		Total internal reflection
+**		Fresnel
+**		http://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
+**		Assuming straight line is fine for the light ray
+**		Beer's Law
+**	Perlin noise
+**	Texture
+**	Bump map
+**	Swag rays
+*/
 
 void	ssaa2(t_args *a, t_vec3 point, t_recurse *rec, int depth, t_rgb colors[4])
 {
@@ -32,9 +48,7 @@ void	ssaa2(t_args *a, t_vec3 point, t_recurse *rec, int depth, t_rgb colors[4])
 			diff += fabs(colors[x].g - colors[y].g);
 			diff += fabs(colors[x].b - colors[y].r);
 		}
-		avg.r += colors[y].r;
-		avg.g += colors[y].g;
-		avg.b += colors[y].b;
+		add_colors(&avg, &colors[y], &avg);
 	}
 	if (depth < 2 && diff >= 1)
 	{
@@ -46,15 +60,10 @@ void	ssaa2(t_args *a, t_vec3 point, t_recurse *rec, int depth, t_rgb colors[4])
 			new.x += 1.0 / pow(2, depth + 1) * ((x % 2) ? -1 : 1);
 			new.y += 1.0 / pow(2, depth + 1) * ((x / 2) ? 1 : -1);
 			ssaa(a, new, rec, depth + 1);
-			avg.r += rec->color.r;
-			avg.g += rec->color.g;
-			avg.b += rec->color.b;
+			add_colors(&avg, &rec->color, &avg);
 		}
 	}
-	avg.r /= 4;
-	avg.g /= 4;
-	avg.b /= 4;
-	rec->color = avg;
+	scale_color(0.25, &avg, &rec->color);
 }
 
 void	ssaa(t_args *a, t_vec3 point, t_recurse *rec, int depth)
@@ -119,6 +128,7 @@ void	*do_recurse(void *args)
 		else
 			regular_pixel(a, point, rec);
 		a->d->image[(z / a->d->s->size.x)][(z % a->d->s->size.x)] = rec->color;
+		a->d->s->count++;
 	}
 	free(args);
 	return (NULL);
@@ -158,6 +168,7 @@ void	draw_reload(t_data *d)
 		return ;
 	d->drawing = 1;
 	d->expired = 0;
+	d->s->count = 0;
 	draw_screen(d);
 	x = -1;
 	while (++x < 16)

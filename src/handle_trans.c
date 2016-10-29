@@ -6,13 +6,13 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 00:54:34 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 05:25:37 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 08:21:54 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	handle_trans(t_data *d, t_recurse *rec)
+float	handle_trans(t_data *d, t_recurse *rec)
 {
 	t_recurse	*recurse;
 
@@ -26,6 +26,7 @@ void	handle_trans(t_data *d, t_recurse *rec)
 	rec->color.g += recurse->color.g;
 	rec->color.b += recurse->color.b;
 	free(recurse);
+	return (1); //replace with Fresnel
 }
 
 void	pass_through(t_data *d, t_recurse *rec, float *obscured, t_list *curr2)
