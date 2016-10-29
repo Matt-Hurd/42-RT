@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:35:53 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/26 04:00:25 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/28 00:07:18 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	print_properties(t_props p)
 	ft_putnbr(p.reflect * 100);
 	ft_putstr("\nRadiance:");
 	ft_putnbr(p.radiance * 100);
+	ft_putstr("\nTranslucency:");
+	ft_putnbr(p.trans * 100);
 	ft_putchar('\n');
 }
 

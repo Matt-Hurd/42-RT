@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:06:16 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/27 01:00:25 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 03:59:59 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <errno.h>
-
-
-
-
-#include <stdio.h>
-
-
-
-
-
-
 
 /*
 ** KEYS
@@ -51,6 +40,14 @@
 # define KEY_ROT_Z_U 88
 # define KEY_ROT_Z_D 85
 
+typedef struct	s_args
+{
+	t_data	*d;
+	t_vec2	start;
+	t_vec2	end;
+	float	global[4][4];
+}				t_args;
+
 void		parse_file(t_data *d, char *filename);
 void		draw_everything(t_data *d);
 int			key_hook(int keycode, t_data *d);
@@ -71,12 +68,13 @@ void		calc_light(t_data *d, t_recurse *rec, t_list *curr);
 void		clear_color(t_rgb *color);
 void		set_radius(t_list *list, void *obj, int type);
 void		find_light(t_data *d, float t, t_recurse *rec);
-void		color_point(t_recurse *rec);
+void		color_point(t_recurse *rec, float obscured);
 void		post_process(t_data *d);
 void		create_input_thread(t_data *d);
 void		ray_trace(t_data *d, t_recurse *rec);
 float		calc_blinn(t_recurse *rec);
 void		handle_trans(t_data *d, t_recurse *rec);
+void		pass_through(t_data *d, t_recurse *rec, float *obs, t_list *curr2);
 
 int			intersect_shape(t_ray *r, void *s, int type, float *t);
 int			intersect_cylinder(t_ray *r, t_cylinder *c, float *t);
@@ -92,7 +90,7 @@ void		normal_cone(t_ray *r, t_cone *c, t_vec3 *n);
 
 void		print_vec3(t_vec3 v, float scale);
 void		print_scene_info(t_data *d);
-void		print_RGB(t_rgb rgb);
+void		print_rgb(t_rgb rgb);
 void		print_properties(t_props p);
 void		print_sphere_info(t_sphere *sphere);
 void		print_plane_info(t_plane *plane);

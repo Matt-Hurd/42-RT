@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 22:42:52 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/27 02:58:19 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 05:25:52 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	ray_trace(t_data *d, t_recurse *rec)
 		find_light(d, t, rec);
 		if (rec->depth++ < d->s->maxdepth && rec->coef > 0 && rec->lit)
 			ray_trace(d, rec);
-		// if (((t_sphere *)rec->closest->content)->props.trans > 0)
-		// 	handle_trans(d, rec);
 	}
 }
 
@@ -54,6 +52,8 @@ void	find_light(t_data *d, float t, t_recurse *rec)
 			calc_light(d, rec, curr);
 		curr = curr->next;
 	}
+	if (((t_sphere *)rec->closest->content)->props.trans > 0)
+		handle_trans(d, rec);
 	scale_vector(2 * dot_vect(&rec->r.dir, &rec->n), &rec->n, temp);
 	sub_vect(&rec->r.dir, temp, &rec->r.dir);
 	free(temp);
@@ -63,30 +63,31 @@ void	find_light(t_data *d, float t, t_recurse *rec)
 
 void	calc_light(t_data *d, t_recurse *rec, t_list *curr)
 {
-	int		obscured;
-	t_vec3	dist;
+	float	obscured;
 	float	t;
+	float	temp;
 	t_list	*curr2;
 
-	obscured = 0;
+	obscured = 1.0;
 	rec->current_light = *(t_light *)curr->content;
-	sub_vect(&rec->current_light.props.pos, &rec->r.start, &dist);
-	t = sqrtf(dot_vect(&dist, &dist));
-	if (!(dot_vect(&rec->n, &dist) <= 0.0f || t <= 0.0))
+	sub_vect(&rec->current_light.props.pos, &rec->r.start, &rec->light_ray.dir);
+	t = sqrtf(dot_vect(&rec->light_ray.dir, &rec->light_ray.dir));
+	if (!(dot_vect(&rec->n, &rec->light_ray.dir) <= 0.0f || t <= 0.0))
 	{
 		rec->light_ray.start = rec->r.start;
-		normalize_vector(&dist);
-		rec->light_ray.dir = dist;
+		normalize_vector(&rec->light_ray.dir);
+		rec->light_ray.color = rec->current_light.props.color;
 		curr2 = d->s->objects;
-		while (curr2 && !obscured)
+		while (curr2 && obscured > 0.0)
 		{
+			temp = t;
 			if (intersect_shape(&rec->light_ray,
-				curr2->content, curr2->content_size, &t))
-				obscured = 1;
+				curr2->content, curr2->content_size, &temp))
+				pass_through(d, rec, &obscured, curr2);
 			curr2 = curr2->next;
 		}
-		if (!obscured)
-			color_point(rec);
+		if (obscured > 0.0)
+			color_point(rec, obscured);
 	}
 }
 
@@ -108,7 +109,7 @@ float	calc_blinn(t_recurse *rec)
 	return (blinn_term);
 }
 
-void	color_point(t_recurse *rec)
+void	color_point(t_recurse *rec, float obscured)
 {
 	float	lambert;
 	float	blinn;
@@ -118,16 +119,18 @@ void	color_point(t_recurse *rec)
 	rec->light += lambert;
 	blinn = calc_blinn(rec);
 	lambert += blinn;
-	// lambert *= rec->coef * ((t_sphere *)rec->closest->content)->props.trans;
-	rec->color.r += lambert * rec->current_light.props.color.r *
+	lambert *= rec->coef;
+	lambert *= obscured;
+	lambert *= (1 - ((t_sphere *)rec->closest->content)->props.trans);
+	rec->color.r += lambert * rec->light_ray.color.r *
 	((t_sphere *)rec->closest->content)->props.color.r *
 	rec->current_light.props.radiance * (1.0 -
 		((t_sphere *)rec->closest->content)->props.reflect);
-	rec->color.g += lambert * rec->current_light.props.color.g *
+	rec->color.g += lambert * rec->light_ray.color.g *
 	((t_sphere *)rec->closest->content)->props.color.g *
 	rec->current_light.props.radiance * (1.0 -
 		((t_sphere *)rec->closest->content)->props.reflect);
-	rec->color.b += lambert * rec->current_light.props.color.b *
+	rec->color.b += lambert * rec->light_ray.color.b *
 	((t_sphere *)rec->closest->content)->props.color.b *
 	rec->current_light.props.radiance * (1.0 -
 		((t_sphere *)rec->closest->content)->props.reflect);

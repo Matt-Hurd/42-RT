@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/27 00:56:44 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 04:42:42 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ typedef struct	s_light
 
 typedef struct	s_ray
 {
-	t_vec3 start;
-	t_vec3 dir;
+	t_vec3	start;
+	t_vec3	dir;
+	t_rgb	color;
 }				t_ray;
 
 typedef struct	s_recurse
@@ -129,11 +130,11 @@ typedef struct	s_data
 	int			s_line;
 	int			ed;
 	char		expired;
-	char		joining;
+	char		drawing;
 	t_rgb		**image;
 	t_scene		*s;
 	pthread_t	*input_thread;
-	pthread_t	*render_thread;
+	pthread_t	render_threads[16];
 }				t_data;
 
 enum			e_object
@@ -149,8 +150,6 @@ enum			e_object
 void			ft_mat_copy(float source[4][4], float dest[4][4]);
 void			ft_mat_mult(float m1[4][4], float m2[4][4], float d[4][4]);
 void			ft_vec_mult_mat(t_vec3 *s, float mat[4][4], t_vec3 *d);
-float			ft_cos(int x);
-float			ft_sin(int x);
 void			ft_tr_translate(float m[4][4], float tx, float ty, float tz);
 void			ft_tr_scale(float matrix[4][4], float sx, float sy, float sz);
 void			ft_tr_rotate(float matrix[4][4], float ax, float ay, float az);

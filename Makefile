@@ -6,7 +6,7 @@
 #    By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 19:34:56 by mhurd             #+#    #+#              #
-#    Updated: 2016/10/27 00:59:11 by mhurd            ###   ########.fr        #
+#    Updated: 2016/10/27 06:26:36 by mhurd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,8 +60,9 @@ OBJDIR2	= ./obj/user_input/
 all: obj libft mlx libgfx $(NAME)
 
 gfx:
-	make -C ./libgfx fclean
 	rm -rf $(NAME)
+	rm -rf $(OBJDIR)
+	make -C ./libgfx fclean
 	make
 
 obj:
