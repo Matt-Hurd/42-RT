@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:06:16 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 03:59:59 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 06:02:29 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		ray_trace(t_data *d, t_recurse *rec);
 float		calc_blinn(t_recurse *rec);
 void		handle_trans(t_data *d, t_recurse *rec);
 void		pass_through(t_data *d, t_recurse *rec, float *obs, t_list *curr2);
+void		ssaa(t_args *a, t_vec3 point, t_recurse *rec, int depth);
 
 int			intersect_shape(t_ray *r, void *s, int type, float *t);
 int			intersect_cylinder(t_ray *r, t_cylinder *c, float *t);

@@ -6,18 +6,103 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 04:47:42 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 05:26:23 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 06:50:39 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	ssaa2(t_args *a, t_vec3 point, t_recurse *rec, int depth, t_rgb colors[4])
+{
+	int		x;
+	int		y;
+	float	diff;
+	t_rgb	avg;
+	t_vec3	new;
+
+	y = -1;
+	diff = 0;
+	clear_color(&avg);
+	while (++y < 4)
+	{
+		x = -1;
+		while (++x < 4)
+		{
+			diff += fabs(colors[x].r - colors[y].r);
+			diff += fabs(colors[x].g - colors[y].g);
+			diff += fabs(colors[x].b - colors[y].r);
+		}
+		avg.r += colors[y].r;
+		avg.g += colors[y].g;
+		avg.b += colors[y].b;
+	}
+	if (depth < 2 && diff >= 1)
+	{
+		clear_color(&avg);
+		x = -1;
+		while (++x < 4)
+		{
+			new = point;
+			new.x += 1.0 / pow(2, depth + 1) * ((x % 2) ? -1 : 1);
+			new.y += 1.0 / pow(2, depth + 1) * ((x / 2) ? 1 : -1);
+			ssaa(a, new, rec, depth + 1);
+			avg.r += rec->color.r;
+			avg.g += rec->color.g;
+			avg.b += rec->color.b;
+		}
+	}
+	avg.r /= 4;
+	avg.g /= 4;
+	avg.b /= 4;
+	rec->color = avg;
+}
+
+void	ssaa(t_args *a, t_vec3 point, t_recurse *rec, int depth)
+{
+	t_ray	r;
+	t_rgb	colors[4];
+	t_vec3	new;
+	int		x;
+
+	x = -1;
+	while (++x < 4)
+	{
+		clear_color(&rec->color);
+		new = point;
+		new.x += 1.0 / pow(2, depth) * ((x % 2) ? -1 : 1);
+		new.y += 1.0 / pow(2, depth) * ((x / 2) ? 1 : -1);
+		scale_vector(1, &a->d->s->cam_pos, &r.start);
+		ft_vec_mult_mat(&new, a->global, &new);
+		sub_vect(&new, &r.start, &r.dir);
+		normalize_vector(&r.dir);
+		rec->coef = 1.0;
+		rec->r = r;
+		rec->depth = 0;
+		ray_trace(a->d, rec);
+		colors[x] = rec->color;
+	}
+	ssaa2(a, point, rec, depth, colors);
+}
+
+void	regular_pixel(t_args *a, t_vec3 point, t_recurse *rec)
+{
+	t_ray		r;
+
+	scale_vector(1, &a->d->s->cam_pos, &r.start);
+	ft_vec_mult_mat(&point, a->global, &point);
+	sub_vect(&point, &r.start, &r.dir);
+	normalize_vector(&r.dir);
+	rec->coef = 1.0;
+	rec->r = r;
+	rec->depth = 0;
+	ray_trace(a->d, rec);
+}
 
 void	*do_recurse(void *args)
 {
 	int			z;
 	t_recurse	*rec;
 	t_vec3		point;
-	t_ray		r;
 	t_args		*a;
 
 	a = (t_args *)args;
@@ -26,17 +111,13 @@ void	*do_recurse(void *args)
 	while (++z < a->d->s->size.x * a->end.y + a->end.x)
 	{
 		clear_color(&rec->color);
-		scale_vector(1, &a->d->s->cam_pos, &r.start);
 		point.x = (z % a->d->s->size.x) - a->d->s->size.x / 2;
 		point.y = (z / a->d->s->size.x) - a->d->s->size.y / 2;
 		point.z = a->d->s->fov * 10;
-		ft_vec_mult_mat(&point, a->global, &point);
-		sub_vect(&point, &r.start, &r.dir);
-		normalize_vector(&r.dir);
-		rec->coef = 1.0;
-		rec->r = r;
-		rec->depth = 0;
-		ray_trace(a->d, rec);
+		if (a->d->s->aa == 2)
+			ssaa(a, point, rec, 1);
+		else
+			regular_pixel(a, point, rec);
 		a->d->image[(z / a->d->s->size.x)][(z % a->d->s->size.x)] = rec->color;
 	}
 	free(args);

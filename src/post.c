@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 23:18:37 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/28 01:13:14 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 06:05:28 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	post_process(t_data *d)
 		x = -1;
 		while (++x < d->s->size.x)
 		{
-			if (d->s->aa)
+			if (d->s->aa == 1)
 				anti_alias(d, y, x, &new);
 			else
 				new = d->image[y][x];
