@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 22:42:52 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 08:27:20 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/31 23:16:46 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ray_trace(t_data *d, t_recurse *rec)
 	rec->closest = NULL;
 	while (curr)
 	{
-		if (intersect_shape(&rec->r, curr->content, curr->content_size, &t))
+		if (intersect_shape(&rec->r, curr, &t, 0))
 			rec->closest = curr;
 		curr = curr->next;
 	}
@@ -43,7 +43,7 @@ void	find_light(t_data *d, float t, t_recurse *rec)
 	temp = (t_vec3 *)ft_memalloc(sizeof(t_vec3));
 	scale_vector(t, &rec->r.dir, temp);
 	add_vect(&rec->r.start, temp, &rec->r.start);
-	normal_shape(&rec->r, &rec->n, rec->closest);
+	normal_shape(&rec->r, &rec->n, rec->closest, 0);
 	curr = d->s->objects;
 	rec->light = 0;
 	if (((t_sphere *)rec->closest->content)->props.trans > 0)
@@ -64,15 +64,14 @@ void	find_light(t_data *d, float t, t_recurse *rec)
 void	calc_light(t_data *d, t_recurse *rec, t_list *curr)
 {
 	float	obscured;
-	float	t;
-	float	temp;
+	float	t[2];
 	t_list	*curr2;
 
 	obscured = 1.0;
 	rec->current_light = *(t_light *)curr->content;
 	sub_vect(&rec->current_light.props.pos, &rec->r.start, &rec->light_ray.dir);
-	t = sqrtf(dot_vect(&rec->light_ray.dir, &rec->light_ray.dir));
-	if (!(dot_vect(&rec->n, &rec->light_ray.dir) <= 0.0f || t <= 0.0))
+	t[0] = sqrtf(dot_vect(&rec->light_ray.dir, &rec->light_ray.dir));
+	if (!(dot_vect(&rec->n, &rec->light_ray.dir) <= 0.0f || t[0] <= 0.0))
 	{
 		rec->light_ray.start = rec->r.start;
 		normalize_vector(&rec->light_ray.dir);
@@ -80,9 +79,8 @@ void	calc_light(t_data *d, t_recurse *rec, t_list *curr)
 		curr2 = d->s->objects;
 		while (curr2 && obscured > 0.0)
 		{
-			temp = t;
-			if (intersect_shape(&rec->light_ray,
-				curr2->content, curr2->content_size, &temp))
+			t[1] = t[0];
+			if (intersect_shape(&rec->light_ray, curr2, &t[1], 0))
 				pass_through(d, rec, &obscured, curr2);
 			curr2 = curr2->next;
 		}

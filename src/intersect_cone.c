@@ -6,13 +6,13 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 21:14:45 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/27 23:52:51 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/31 23:15:37 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	normal_cone(t_ray *r, t_cone *c, t_vec3 *n)
+void	normal_cone(t_ray *r, t_cone *c, t_vec3 *n, char i)
 {
 	t_vec3	v;
 	t_vec3	project;
@@ -20,10 +20,12 @@ void	normal_cone(t_ray *r, t_cone *c, t_vec3 *n)
 	sub_vect(&r->start, &c->props.pos, &v);
 	scale_vector(dot_vect(&v, &c->props.rot), &c->props.rot, &project);
 	sub_vect(&v, &project, n);
+	if (i)
+		scale_vector(-1, n, n);
 	normalize_vector(n);
 }
 
-int		intersect_cone(t_ray *r, t_cone *c, float *t)
+int		intersect_cone(t_ray *r, t_cone *c, float *t, char i)
 {
 	t_vec3	tmp;
 	float	a[3];
@@ -44,8 +46,8 @@ int		intersect_cone(t_ray *r, t_cone *c, float *t)
 	{
 		b[0] = (-a[1] + sqrtf(discr)) / (2 * a[0]);
 		b[1] = (-a[1] - sqrtf(discr)) / (2 * a[0]);
-		b[2] = (b[0] < b[1] ? b[0] : b[1]);
-		b[2] = (b[2] < 0 ? b[1] : b[2]);
+		b[2] = (b[0] < b[1]) ^ i ? b[0] : b[1];
+		b[2] = (b[2] < 0) ? b[1] : b[2];
 	}
 	if (b[2] > 0.1 && *t > b[2])
 		*t = b[2];

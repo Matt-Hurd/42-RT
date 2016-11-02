@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 20:32:43 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 06:57:21 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/31 22:45:30 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,30 @@ void	parse_color(char *color, t_rgb *ref)
 	ref->b = (float)ft_atoi(buff[2]) / 255;
 }
 
-void	normal_shape(t_ray *r, t_vec3 *n, t_list *s)
+void	normal_shape(t_ray *r, t_vec3 *n, t_list *s, char intern)
 {
 	if (s->content_size == SPHERE)
-		normal_sphere(r, s->content, n);
+		normal_sphere(r, s->content, n, intern);
 	else if (s->content_size == CYLINDER)
-		normal_cylinder(r, s->content, n);
+		normal_cylinder(r, s->content, n, intern);
 	else if (s->content_size == PLANE)
 		normal_plane(r, s->content, n);
 	else if (s->content_size == CONE)
-		normal_cone(r, s->content, n);
+		normal_cone(r, s->content, n, intern);
 	else
 		return ;
 }
 
-int		intersect_shape(t_ray *r, void *s, int type, float *t)
+int		intersect_shape(t_ray *r, t_list *s, float *t, char intern)
 {
-	if (type == SPHERE)
-		return (intersect_sphere(r, s, t));
-	if (type == CYLINDER)
-		return (intersect_cylinder(r, s, t));
-	if (type == PLANE)
-		return (intersect_plane(r, s, t));
-	if (type == CONE)
-		return (intersect_cone(r, s, t));
+	if (s->content_size == SPHERE)
+		return (intersect_sphere(r, s->content, t, intern));
+	else if (s->content_size == CYLINDER)
+		return (intersect_cylinder(r, s->content, t, intern));
+	else if (s->content_size == PLANE)
+		return (intersect_plane(r, s->content, t));
+	else if (s->content_size == CONE)
+		return (intersect_cone(r, s->content, t, intern));
 	else
 		return (0);
 }

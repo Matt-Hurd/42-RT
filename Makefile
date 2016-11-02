@@ -6,7 +6,7 @@
 #    By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 19:34:56 by mhurd             #+#    #+#              #
-#    Updated: 2016/10/29 10:43:39 by mhurd            ###   ########.fr        #
+#    Updated: 2016/10/30 17:47:47 by mhurd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRC		= main.c \
 		  /user_input/print_scene.c \
 		  /user_input/parse_misc.c \
 		  /user_input/modify_object.c \
-		  /user_input/add_object.c
+		  /user_input/add_object.c \
+		  ssaa.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

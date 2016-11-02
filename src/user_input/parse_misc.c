@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:48:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/28 01:13:21 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/29 22:48:36 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		parse_misc(char **split, int c, t_data *d)
 	{
 		if (ft_strequ(split[0], "aa"))
 		{
-			d->s->aa = (ft_strequ(split[1], "off")) ? 0 : 1;
+			d->s->aa = ft_atoi(split[1]);
 			return (1);
 		}
 		else if (ft_strequ(split[0], "depth"))

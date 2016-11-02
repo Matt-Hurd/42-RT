@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 08:27:06 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/10/30 16:21:23 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ typedef struct	s_data
 	t_rgb		**image;
 	t_scene		*s;
 	pthread_t	*input_thread;
-	pthread_t	render_threads[16];
+	pthread_t	*render_threads;
+	int			thread_count;
 }				t_data;
 
 enum			e_object

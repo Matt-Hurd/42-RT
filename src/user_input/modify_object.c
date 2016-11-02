@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:59:52 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/28 00:05:47 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/01 02:46:33 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static int	set_props(char **s, t_sphere *obj)
 		return (change_rotation(obj, ft_atoi(s[3]) * M_PI / 180, s[2][3]));
 	else if (ft_strstr(s[2], "radiance"))
 		obj->props.radiance = (float)ft_atoi(s[3]) / 100;
+	else if (ft_strstr(s[2], "density"))
+		obj->props.density = (float)ft_atoi(s[3]) / 100;
 	else
 		return (0);
 	return (1);
