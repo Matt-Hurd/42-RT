@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 22:42:52 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/31 23:16:46 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/02 06:43:24 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ray_trace(t_data *d, t_recurse *rec)
 	t_list	*curr;
 	float	t;
 
-	t = 30000;
+	t = 3000000;
 	curr = d->s->objects;
 	rec->closest = NULL;
 	while (curr)

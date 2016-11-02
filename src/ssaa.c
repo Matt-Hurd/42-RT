@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:29:15 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/30 17:51:10 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/02 07:43:43 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ssaa2(t_args *a, t_vec3 point, t_recurse *rec, int depth)
 	diff = 0;
 	clear_color(&avg);
 	diff = find_diff(a, &avg);
-	if (depth < 2 && diff >= 1)
+	if (depth < 1 && diff >= 1)
 	{
 		clear_color(&avg);
 		x = -1;
