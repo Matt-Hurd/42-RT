@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 04:47:42 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/30 17:30:12 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/17 23:36:05 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 
 /*
 **TODO:
-**	Refraction
-**		Find internal intersection
-**		Snell's law
-**		Total internal reflection
-**		Fresnel
-**		http://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
-**		Assuming straight line is fine for the light ray
-**		Beer's Law
-**	Perlin noise
-**	Texture
+**	Textures
 **	Bump map
 **	Swag rays
 */
@@ -118,6 +109,7 @@ void	draw_everything(t_data *d)
 {
 	int y;
 
+	init_perlin();
 	d->mlx = mlx_init();
 	d->win = mlx_new_window(d->mlx, d->s->size.x,
 		d->s->size.y, d->s->name);

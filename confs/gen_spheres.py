@@ -1,10 +1,11 @@
 from random import random
+import sys
 
-num_spheres = 200
+num_spheres = 100
 size = 10
-xrang = 600
+xrang = 1000
 yrang = 1600
-ymin = -600
+ymin = -1000
 height_diff = 10
 print('''[scene]
 	name=RT
@@ -14,16 +15,16 @@ print('''[scene]
 	cameraRot=0.0, 0.0, 0.0
 	fov=90
 	aa=0
-	depth=0
+	depth=3
 
 [light]
 	radiance=100
-	pos=0.0, -400.0, -800.0
+	pos=0.0, -400.0, -400.0
 	color=255, 255, 255
 
 [light]
 	radiance=100
-	pos=0.0, -180.0, -800.0
+	pos=0.0, -180.0, -400.0
 	color=255, 255, 255
 
 [plane]
@@ -51,7 +52,9 @@ print('''[scene]
 	color=0, 0, 0
 	transparency=50
 	density=250''')
-
+normal = 0
+trans = 0
+reflect = 0
 for s in range(num_spheres):
 	x = (random() - 0.5) * xrang
 	y = random() * yrang + ymin
@@ -63,12 +66,16 @@ for s in range(num_spheres):
 	print("[sphere]")
 	print("	radius=%d" % size)
 	print("	pos=%f, %f, %f" % (x, z, y))
-	if (t > 0.2):
-		print("	color=%d, %d, %d" % (r, g, b))
-	elif (t > 0.1):
-		print("	transparency=50")
+	print("	color=%d, %d, %d" % (r, g, b))
+	if (t < 0.1):
+		trans += 1
+		print("	transparency=%d" % (random()*100))
 		print("	density=250")
-	else:
+	elif t > 0.9:
+		reflect += 1
 		print("	reflect=80")
 		print("	gloss=70")
+	else:
+		normal += 1
 	print ("")
+sys.stderr.write("Normal: %d\nTranslucent: %d\nReflective: %d\n" %(normal, trans, reflect))

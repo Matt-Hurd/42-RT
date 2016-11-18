@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:06:16 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/31 22:46:46 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/17 23:46:08 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,15 @@ void			normalize_vector(t_vec3 *v);
 void			calc_light(t_data *d, t_recurse *rec, t_list *curr);
 void			set_radius(t_list *list, void *obj, int type);
 void			find_light(t_data *d, float t, t_recurse *rec);
-void			color_point(t_recurse *rec, float obscured);
+void			color_point(t_recurse *rec);
 void			post_process(t_data *d);
 void			create_input_thread(t_data *d);
 void			ray_trace(t_data *d, t_recurse *rec);
-float			calc_blinn(t_recurse *rec);
 float			handle_trans(t_data *d, t_recurse *rec);
 void			pass_through(t_data *d, t_recurse *r, float *o, t_list *c2);
 void			ssaa(t_args *a, t_vec3 point, t_recurse *rec, int depth);
+double			noise(double x, double y, double z);
+void			init_perlin(void);
 void			regular_pixel(t_args *a, t_vec3 point, t_recurse *rec);
 
 void			parse_file(t_data *d, char *filename);
@@ -112,4 +113,5 @@ int				del_object(char **s, t_data *d);
 t_list			*get_object(t_data *d, int num);
 void			display_help(void);
 
+int				set_props(char **s, t_sphere *obj);
 #endif

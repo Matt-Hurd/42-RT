@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/30 16:21:23 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/18 00:39:55 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 # include <pthread.h>
 # define ABS(x) ((x > 0) ? x : x * -1)
 # define SQ(x) (x * x)
+
+
+#include <stdio.h>
+
+enum			e_material
+{
+	MAT_NONE,
+	MAT_MARBLE
+};
 
 typedef struct	s_rgb
 {
@@ -57,6 +66,7 @@ typedef struct	s_props
 	float	radiance;
 	float	trans;
 	float	gloss;
+	int		material;
 }				t_props;
 
 typedef struct	s_plane
@@ -92,6 +102,7 @@ typedef struct	s_ray
 	t_vec3	start;
 	t_vec3	dir;
 	t_rgb	color;
+	float	radiance;
 }				t_ray;
 
 typedef struct	s_recurse
@@ -104,6 +115,7 @@ typedef struct	s_recurse
 	float	coef;
 	t_ray	r;
 	t_vec3	n;
+	t_vec3	start;
 	int		depth;
 	float	light;
 }				t_recurse;
@@ -163,4 +175,5 @@ void			sub_vect(t_vec3 *v1, t_vec3 *v2, t_vec3 *d);
 float			dot_vect(t_vec3 *v1, t_vec3 *v2);
 void			scale_vector(float c, t_vec3 *v, t_vec3 *d);
 void			add_vect(t_vec3 *v1, t_vec3 *v2, t_vec3 *d);
+void			free_all(t_data *d);
 #endif

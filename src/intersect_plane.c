@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 20:57:34 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/31 22:44:54 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/18 01:00:38 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		intersect_plane(t_ray *r, t_plane *p, float *t)
 	sub_vect(&p->props.pos, &r->start, &temp);
 	n = dot_vect(&p->props.rot, &temp);
 	d = dot_vect(&p->props.rot, &r->dir);
-	if ((res = n / d) > 0.01 && res < *t)
+	if ((res = n / d) > 0.1 && res < *t)
 		*t = res;
 	return ((res == *t) ? 1 : 0);
 }

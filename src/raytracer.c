@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 22:42:52 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/02 06:43:24 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/18 01:05:31 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,60 +76,16 @@ void	calc_light(t_data *d, t_recurse *rec, t_list *curr)
 		rec->light_ray.start = rec->r.start;
 		normalize_vector(&rec->light_ray.dir);
 		rec->light_ray.color = rec->current_light.props.color;
+		rec->light_ray.radiance = rec->current_light.props.radiance;
 		curr2 = d->s->objects;
-		while (curr2 && obscured > 0.0)
+		while ((t[1] = t[0]) && curr2 && obscured > 0.0)
 		{
-			t[1] = t[0];
-			if (intersect_shape(&rec->light_ray, curr2, &t[1], 0))
+			if (intersect_shape(&rec->light_ray, curr2, &t[1], 0) ||
+				intersect_shape(&rec->light_ray, curr2, &t[1], 1))
 				pass_through(d, rec, &obscured, curr2);
 			curr2 = curr2->next;
 		}
 		if (obscured > 0.0)
-			color_point(rec, obscured);
+			color_point(rec);
 	}
-}
-
-float	calc_blinn(t_recurse *rec)
-{
-	t_vec3		half;
-	float		blinn_term;
-	float		reflect;
-	float		gloss;
-
-	reflect = ((t_sphere *)rec->closest->content)->props.reflect;
-	gloss = ((t_sphere *)rec->closest->content)->props.gloss;
-	sub_vect(&rec->light_ray.dir, &rec->r.dir, &half);
-	normalize_vector(&half);
-	blinn_term = dot_vect(&half, &rec->n);
-	blinn_term = MAX(0, reflect * powf(blinn_term, gloss * 100));
-	if (gloss < 0.1)
-		blinn_term = 0;
-	return (blinn_term);
-}
-
-void	color_point(t_recurse *rec, float obscured)
-{
-	float	lambert;
-	float	blinn;
-
-	rec->lit = 1;
-	lambert = dot_vect(&rec->light_ray.dir, &rec->n);
-	rec->light += lambert;
-	blinn = calc_blinn(rec);
-	lambert += blinn;
-	lambert *= rec->coef;
-	lambert *= obscured;
-	lambert *= (1 - ((t_sphere *)rec->closest->content)->props.trans);
-	rec->color.r += lambert * rec->light_ray.color.r *
-	((t_sphere *)rec->closest->content)->props.color.r *
-	rec->current_light.props.radiance * (1.0 -
-		((t_sphere *)rec->closest->content)->props.reflect);
-	rec->color.g += lambert * rec->light_ray.color.g *
-	((t_sphere *)rec->closest->content)->props.color.g *
-	rec->current_light.props.radiance * (1.0 -
-		((t_sphere *)rec->closest->content)->props.reflect);
-	rec->color.b += lambert * rec->light_ray.color.b *
-	((t_sphere *)rec->closest->content)->props.color.b *
-	rec->current_light.props.radiance * (1.0 -
-		((t_sphere *)rec->closest->content)->props.reflect);
 }

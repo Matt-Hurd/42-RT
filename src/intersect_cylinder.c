@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 21:14:45 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/02 05:56:41 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/18 01:00:48 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		intersect_cylinder(t_ray *r, t_cylinder *cy, float *t, char i)
 		a[1] = (-a[1] - sqrtf(discr)) / (2 * dot_vect(&oc, &oc));
 		a[0] = ((MIN(a[2], a[1]) < 0) ^ i ? MAX(a[2], a[1]) : MIN(a[2], a[1]));
 	}
-	if (discr >= 0 && a[0] > 0.01 && *t > a[0])
+	if (discr >= 0 && a[0] > 0.1 && *t > a[0])
 		*t = a[0];
 	return (*t == a[0]);
 }

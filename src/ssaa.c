@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:29:15 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/02 07:43:43 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/16 21:15:05 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	regular_pixel(t_args *a, t_vec3 point, t_recurse *rec)
 	normalize_vector(&r.dir);
 	rec->coef = 1.0;
 	rec->r = r;
+	rec->start = point;
+	normalize_vector(&rec->start);
 	rec->depth = 0;
 	ray_trace(a->d, rec);
 }
@@ -83,6 +85,8 @@ void	ssaa(t_args *a, t_vec3 point, t_recurse *rec, int depth)
 	int		x;
 
 	x = -1;
+	rec->start = point;
+	normalize_vector(&rec->start);
 	while (++x < 4)
 	{
 		clear_color(&rec->color);

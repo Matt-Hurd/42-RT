@@ -6,7 +6,7 @@
 #    By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 19:34:56 by mhurd             #+#    #+#              #
-#    Updated: 2016/10/30 17:47:47 by mhurd            ###   ########.fr        #
+#    Updated: 2016/11/17 23:44:24 by mhurd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,11 @@ SRC		= main.c \
 		  raytracer.c \
 		  hooks.c \
 		  error.c \
+		  color_point.c \
 		  parse_basic.c \
 		  parse_light.c \
 		  parse_extras.c \
+		  parse_shapes.c \
 		  intersect_sphere.c \
 		  intersect_cylinder.c \
 		  intersect_plane.c \
@@ -29,14 +31,19 @@ SRC		= main.c \
 		  post.c \
 		  handle_trans.c \
 		  manip_colors.c \
+		  ssaa.c \
+		  perlin.c \
 		  /user_input/user_input.c \
 		  /user_input/print_objects.c \
 		  /user_input/print_scene.c \
 		  /user_input/parse_misc.c \
 		  /user_input/modify_object.c \
 		  /user_input/add_object.c \
-		  ssaa.c
+		  /user_input/set_props.c \
 
+ifdef ALLOCWRAP
+	LDFLAGS += $(HOME)/lib/alloc_wrap.c -ldl
+endif
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
 CC		= gcc
@@ -90,7 +97,7 @@ $(LIBGFX):
 	make -C ./libgfx
 
 $(NAME): $(OBJ)
-	$(CC) -o $(NAME) $(OBJ) $(MLXLINK) $(LIBGFXLINK) $(LIBLINK)
+	$(CC) $(LDFLAGS) -o $(NAME) $(OBJ) $(MLXLINK) $(LIBGFXLINK) $(LIBLINK)
 
 clean:
 	rm -rf $(OBJDIR)

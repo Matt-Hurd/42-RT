@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 20:39:50 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/31 23:16:31 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/18 01:00:43 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		intersect_sphere(t_ray *r, t_sphere *s, float *t, char internal)
 	temp.y = (-temp.y + temp.x) / 2;
 	if ((internal && temp.y < temp.z) || (!internal && temp.y > temp.z))
 		temp.y = temp.z;
-	if ((temp.y > 0.01) && (temp.y < *t))
+	if ((temp.y > 0.1) && (temp.y < *t))
 		*t = temp.y;
 	return ((*t == temp.y) ? 1 : 0);
 }
