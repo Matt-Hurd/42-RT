@@ -6,7 +6,7 @@
 #    By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 19:34:56 by mhurd             #+#    #+#              #
-#    Updated: 2016/11/17 23:44:24 by mhurd            ###   ########.fr        #
+#    Updated: 2016/11/19 03:45:32 by mhurd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,18 +23,22 @@ SRC		= main.c \
 		  parse_light.c \
 		  parse_extras.c \
 		  parse_shapes.c \
+		  parse_model.c \
 		  intersect_sphere.c \
 		  intersect_cylinder.c \
 		  intersect_plane.c \
 		  intersect_cone.c \
+		  intersect_model.c \
 		  helpers.c \
 		  post.c \
 		  handle_trans.c \
 		  manip_colors.c \
 		  ssaa.c \
 		  perlin.c \
+		  update_model.c \
 		  /user_input/user_input.c \
 		  /user_input/print_objects.c \
+		  /user_input/print_model.c \
 		  /user_input/print_scene.c \
 		  /user_input/parse_misc.c \
 		  /user_input/modify_object.c \
@@ -104,6 +108,9 @@ clean:
 	make -C ./libft clean
 	make -C ./minilibx clean
 	make -C ./libgfx clean
+
+nm: all
+	nm -U RT 2>/dev/null | grep -ve '^[[:space:]]*$' | grep -v ':'|  sed -E 's/^_//' | tr "\t" " " | sed 's/.* //'
 
 fclean: clean
 	rm -rf $(NAME)

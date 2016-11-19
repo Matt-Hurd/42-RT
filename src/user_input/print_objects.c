@@ -6,11 +6,11 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:35:41 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/28 01:13:21 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/19 03:10:46 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <rt.h>
+#include "rt.h"
 
 void	print_sphere_info(t_sphere *sphere)
 {

@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 20:13:13 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/18 00:50:54 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/19 03:56:13 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	change_rotation(t_sphere *obj, float new, char which)
 		obj->props.rot.z = new;
 	else
 		return (0);
+	if (obj->props.object)
+		return (1);
 	n.x = 0;
 	n.y = -1;
 	n.z = 0;
@@ -64,6 +66,8 @@ static int	set_props_2(char **s, t_sphere *obj)
 		obj->props.trans = (float)ft_atoi(s[3]) / 100;
 	else if (ft_strstr(s[2], "density"))
 		obj->props.density = (float)ft_atoi(s[3]) / 100;
+	else if (ft_strstr(s[2], "bump"))
+		obj->props.bump = (float)ft_atoi(s[3]) / 100;
 	else
 		return (set_props_mat(s, obj));
 	return (1);

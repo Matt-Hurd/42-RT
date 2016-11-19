@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 19:49:17 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/09 18:32:13 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/18 06:37:08 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		free_all(t_data *d)
 	free(d->input_thread);
 }
 
-t_vec3		*ft_make_vec3(int x, int y, int z)
+t_vec3		*ft_make_vec3(float x, float y, float z)
 {
 	t_vec3 *ret;
 
@@ -42,6 +42,13 @@ t_vec3		*ft_make_vec3(int x, int y, int z)
 	ret->y = y;
 	ret->z = z;
 	return (ret);
+}
+
+void		ft_set_vec3(t_vec3 *vec, float x, float y, float z)
+{
+	vec->x = x;
+	vec->y = y;
+	vec->z = z;
 }
 
 t_vertex	*ft_make_vertex(int x, int y, int z)

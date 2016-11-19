@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_model.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/08 15:35:03 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 03:58:26 by mhurd            ###   ########.fr       */
+/*   Created: 2016/11/19 03:06:42 by mhurd             #+#    #+#             */
+/*   Updated: 2016/11/19 03:57:15 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	display_usage(char *av)
+void	print_model_info(t_model *model)
 {
-	ft_putstr("usage: ");
-	ft_putstr(av);
-	ft_putendl(" input_file");
-}
-
-int		main(int ac, char **av)
-{
-	t_data	*data;
-
-	if (ac == 2)
-	{
-		data = (t_data *)ft_memalloc(sizeof(t_data));
-		if (!data)
-			ft_error("Malloc Error");
-		parse_file(data, av[1]);
-		create_input_thread(data);
-		display_help();
-		draw_everything(data);
-	}
-	else
-		display_usage(av[0]);
-	return (0);
+	ft_putendl("[model]");
+	ft_putstr("File: ");
+	ft_putendl(model->filename);
+	ft_putstr("Vertices: ");
+	ft_putnbr(model->vc);
+	ft_putendl("");
+	ft_putstr("Normals: ");
+	ft_putnbr(model->vnc);
+	ft_putendl("");
+	ft_putstr("Faces: ");
+	ft_putnbr(model->face_count);
+	ft_putendl("");
+	ft_putstr("Scale: ");
+	ft_putnbr(model->scale * 100);
+	ft_putendl("");
+	print_properties(model->props);
 }

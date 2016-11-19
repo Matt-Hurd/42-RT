@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 17:14:06 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/18 00:46:47 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/18 03:33:56 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	parser_set_props(char **buff, t_props *props)
 		props->density = (float)ft_atoi(buff[1]) / 100;
 	else if (ft_strequ(buff[0], "radiance"))
 		props->radiance = (float)ft_atoi(buff[1]) / 100;
+	else if (ft_strequ(buff[0], "bump"))
+		props->bump = (float)ft_atoi(buff[1]) / 100;
 	else if (ft_strequ(buff[0], "material"))
 		set_material(buff, props);
 }

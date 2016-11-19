@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <rt.h>
+#include "rt.h"
 
 t_rgb	*anti_alias(t_data *d, int y, int x, t_rgb *new)
 {

@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:35:53 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/01 02:45:57 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/19 03:11:36 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	print_scene_info(t_data *d)
 			print_plane_info(a->content);
 		if (a->content_size == LIGHT)
 			print_light_info(a->content);
+		if (a->content_size == MODEL)
+			print_model_info(a->content);
 		ft_putendl("");
 		a = a->next;
 	}
