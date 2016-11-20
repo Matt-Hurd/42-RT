@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/18 06:50:05 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 04:28:03 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/11/19 07:42:30 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		intersect_triangle(t_ray *r, t_vec3 vertices[3], float *t)
 	sub_vect(&vertices[2], &vertices[0], &tmp_vecs[1]);
 	cross_vect(&r->dir, &tmp_vecs[1], &tmp_vecs[2]);
 	tmp_floats[0] = dot_vect(&tmp_vecs[0], &tmp_vecs[2]);
-	if (tmp_floats[0] > -0.00001 && tmp_floats[0] < 0.00001)
+	if (tmp_floats[0] > -0.001 && tmp_floats[0] < 0.001)
 		return (0);
 	tmp_floats[1] = 1 / tmp_floats[0];
 	sub_vect(&r->start, &vertices[0], &tmp_vecs[3]);
@@ -43,7 +43,7 @@ int		intersect_triangle(t_ray *r, t_vec3 vertices[3], float *t)
 	if (tmp_floats[3] < 0.0 || tmp_floats[2] + tmp_floats[3] > 1.0)
 		return (0);
 	*t = tmp_floats[1] * dot_vect(&tmp_vecs[1], &tmp_vecs[4]);
-	return (*t > 0.0001 ? 1 : 0);
+	return (*t > 0.001 ? 1 : 0);
 }
 
 int		intersect_model(t_ray *r, t_model *m, float *t)
