@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_light.c                                      :+:      :+:    :+:   */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/18 18:59:58 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:09:46 by mhurd            ###   ########.fr       */
+/*   Created: 2016/12/11 08:26:12 by mhurd             #+#    #+#             */
+/*   Updated: 2016/12/11 08:34:59 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+#include "libft.h"
 
-void	parse_light(t_data *d, t_list *list)
+/*
+** Handles floats up to max int or down to min int
+*/
+
+double	ft_atof(const char *str)
 {
-	t_light		*light;
-	t_list		*ret;
+	double	res;
+	double	res2;
+	char	*c;
+	int		len;
 
-	light = (t_light *)ft_memalloc(sizeof(t_light));
-	parse_props(list, &light->props);
-	ret = ft_lstnew(light, sizeof(t_light));
-	free(light);
-	ret->content_size = LIGHT;
-	ft_lstadd(&d->s->objects, ret);
+	c = (char *)str;
+	res = (double)ft_atoi(c);
+	while (*c && *c != '.')
+		c++;
+	if (*c == '.')
+		c++;
+	res2 = (double)ft_atoi(c);
+	len = ft_strlen(c);
+	while (len--)
+		res2 /= 10;
+	return (res + ((res > 0) ? res2 : -res2));
 }

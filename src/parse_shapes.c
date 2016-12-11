@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 23:33:40 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/17 23:33:59 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:12:13 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	parse_sphere(t_data *d, t_list *list)
 		list = list->next;
 	}
 	ret = ft_lstnew(sphere, sizeof(t_sphere));
+	free(sphere);
 	ret->content_size = SPHERE;
 	ft_lstadd(&d->s->objects, ret);
 }
@@ -50,6 +51,7 @@ void	parse_plane(t_data *d, t_list *list)
 		plane->props.rot.z);
 	ft_vec_mult_mat(&n, global_matrix, &plane->props.rot);
 	ret = ft_lstnew(plane, sizeof(t_plane));
+	free(plane);
 	ret->content_size = PLANE;
 	ft_lstadd(&d->s->objects, ret);
 }
@@ -78,6 +80,7 @@ void	parse_cylinder(t_data *d, t_list *list)
 		cylinder->props.rot.z);
 	ft_vec_mult_mat(&n, global_matrix, &cylinder->props.rot);
 	ret = ft_lstnew(cylinder, sizeof(t_cylinder));
+	free(cylinder);
 	ret->content_size = CYLINDER;
 	ft_lstadd(&d->s->objects, ret);
 }
@@ -106,6 +109,7 @@ void	parse_cone(t_data *d, t_list *list)
 		cone->props.rot.z);
 	ft_vec_mult_mat(&n, global_matrix, &cone->props.rot);
 	ret = ft_lstnew(cone, sizeof(t_cone));
+	free(cone);
 	ret->content_size = CONE;
 	ft_lstadd(&d->s->objects, ret);
 }

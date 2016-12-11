@@ -6,21 +6,35 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/23 04:07:27 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/28 01:13:16 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:49:14 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
+void	parse_float_trip(t_vec3 *dest, char *line)
+{
+	char	**split;
+
+	split = ft_strsplit(line, ' ');
+	if (ft_count_words(line, ' ') != 4)
+		ft_error("Invalid float triple");
+	dest->x = ft_atof(split[1]);
+	dest->y = ft_atof(split[2]);
+	dest->z = ft_atof(split[3]);
+	ft_free_strsplit(line, split, ' ');
+}
+
 void	set_radius(t_list *list, void *obj, int type)
 {
 	char **buff;
+	char *tmp;
 
 	if (ft_strchr(list->content, '='))
 	{
 		buff = ft_strsplit(list->content, '=');
-		buff[0] = ft_strtrim(buff[0]);
-		if (ft_strequ(buff[0], "radius"))
+		tmp = ft_strtrim(buff[0]);
+		if (ft_strequ(tmp, "radius"))
 		{
 			if (type == CONE)
 				((t_cone *)obj)->radius = (float)ft_atoi(buff[1]) * M_PI / 180;
@@ -29,6 +43,7 @@ void	set_radius(t_list *list, void *obj, int type)
 			if (type == SPHERE)
 				((t_sphere *)obj)->radius = (float)ft_atoi(buff[1]);
 		}
-		free(buff);
+		free(tmp);
+		ft_free_strsplit(list->content, buff, '=');
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 17:14:06 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/18 03:33:56 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:11:34 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,21 @@ void	parser_set_props(char **buff, t_props *props)
 void	parse_props(t_list *list, t_props *props)
 {
 	char	**buff;
+	char	*tmp;
 
 	while (list && !ft_strchr(list->content, '['))
 	{
 		if (ft_strchr(list->content, '='))
 		{
 			buff = ft_strsplit(list->content, '=');
+			tmp = buff[0];
 			buff[0] = ft_strtrim(buff[0]);
+			free(tmp);
+			tmp = buff[1];
 			buff[1] = ft_strtrim(buff[1]);
+			free(tmp);
 			parser_set_props(buff, props);
-			free(buff);
+			ft_free_strsplit(list->content, buff, '=');
 		}
 		list = list->next;
 	}

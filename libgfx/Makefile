@@ -13,7 +13,8 @@ SRC	+=	matrix_math.c \
 		transform_matrix.c \
 		initializers.c \
 		put_pixel.c \
-		vector_math.c
+		vector_math.c \
+		vect_math2.c
 
 O =		$(addprefix $(ODIR), $(OBJ))
 

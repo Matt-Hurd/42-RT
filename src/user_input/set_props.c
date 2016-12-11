@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 20:13:13 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 03:56:13 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:16:09 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ static int	set_props_mat(char **s, t_sphere *obj)
 			return (1);
 		}
 		else
-		{
 			obj->props.material = MAT_NONE;
-		}
 	}
 	return (0);
 }

@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_light.c                                      :+:      :+:    :+:   */
+/*   vect_math2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/18 18:59:58 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:09:46 by mhurd            ###   ########.fr       */
+/*   Created: 2016/12/11 08:53:18 by mhurd             #+#    #+#             */
+/*   Updated: 2016/12/11 08:53:37 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+#include "libgfx.h"
 
-void	parse_light(t_data *d, t_list *list)
+float	length_vect(t_vec3 *in)
 {
-	t_light		*light;
-	t_list		*ret;
+	return (sqrtf(pow(in->x, 2) + pow(in->y, 2) + pow(in->z, 2)));
+}
 
-	light = (t_light *)ft_memalloc(sizeof(t_light));
-	parse_props(list, &light->props);
-	ret = ft_lstnew(light, sizeof(t_light));
-	free(light);
-	ret->content_size = LIGHT;
-	ft_lstadd(&d->s->objects, ret);
+float	dot_vect(t_vec3 *v1, t_vec3 *v2)
+{
+	return (v1->x * v2->x + v1->y * v2->y + v1->z * v2->z);
 }

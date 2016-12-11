@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_light.c                                      :+:      :+:    :+:   */
+/*   ft_free_strsplit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/18 18:59:58 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:09:46 by mhurd            ###   ########.fr       */
+/*   Created: 2016/12/10 11:43:59 by mhurd             #+#    #+#             */
+/*   Updated: 2016/12/10 11:48:21 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+#include "libft.h"
+#include <stdlib.h>
 
-void	parse_light(t_data *d, t_list *list)
+void	ft_free_strsplit(char *s, char **buff, char split)
 {
-	t_light		*light;
-	t_list		*ret;
+	int x;
+	int len;
 
-	light = (t_light *)ft_memalloc(sizeof(t_light));
-	parse_props(list, &light->props);
-	ret = ft_lstnew(light, sizeof(t_light));
-	free(light);
-	ret->content_size = LIGHT;
-	ft_lstadd(&d->s->objects, ret);
+	len = ft_count_words(s, split);
+	x = -1;
+	while (++x < len)
+		free(buff[x]);
+	free(buff);
 }

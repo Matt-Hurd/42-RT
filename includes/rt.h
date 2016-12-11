@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:06:16 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 04:06:43 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:49:29 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void			parse_plane(t_data *d, t_list *list);
 void			parse_props(t_list *list, t_props *props);
 void			parse_light(t_data *d, t_list *list);
 void			parse_model(t_data *d, t_list *list);
+void			parse_float_trip(t_vec3 *dest, char *line);
 
 void			scale_color(float scale, t_rgb *c1, t_rgb *c2);
 void			add_colors(t_rgb *c1, t_rgb *c2, t_rgb *c3);
@@ -119,6 +120,7 @@ int				del_object(char **s, t_data *d);
 t_list			*get_object(t_data *d, int num);
 void			display_help(void);
 void			update_model(t_model *m);
+void			validate_scene(t_data *d);
 
 int				set_props(char **s, t_sphere *obj);
 #endif

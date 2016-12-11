@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 01:22:59 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/28 01:13:19 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:21:42 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	handle_input(char *s, t_data *d)
 		d->expired = 1;
 	else if (count >= 2 && del_object(split, d))
 		d->expired = 1;
+	ft_free_strsplit(s, split, ' ');
+	free(s);
 }
 
 void	*parse_input(void *data)

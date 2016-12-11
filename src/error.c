@@ -6,11 +6,18 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/11 04:21:33 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/28 01:13:18 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:14:33 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	validate_scene(t_data *d)
+{
+	if (!d || !d->s || !d->s->fov || d->s->size.x <= 0
+			|| d->s->size.y <= 0 || !d->s->name)
+		ft_error("Invalid config");
+}
 
 void	ft_exit(void)
 {

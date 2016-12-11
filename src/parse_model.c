@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 02:15:36 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 04:38:31 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:50:44 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_model(t_model *m, char *line)
 
 	split = ft_strsplit(line, ' ');
 	if (ft_count_words(line, ' ') != 4)
-		return ; //Error
+		ft_error("Invalid model file");
 	m->vc = ft_atoi(split[1]);
 	m->vnc = ft_atoi(split[2]);
 	m->face_count = ft_atoi(split[3]);
@@ -32,36 +32,25 @@ void	init_model(t_model *m, char *line)
 	x = -1;
 	while (++x < m->face_count)
 		m->faces[x] = ft_memalloc(sizeof(int) * 4);
-	free(split);
+	ft_free_strsplit(line, split, ' ');
 }
 
-void	parse_float_trip(t_vec3 *dest, char *line)
+void	parse_face(int face[4], char *line, t_model *m)
 {
 	char	**split;
 
-	//rewrite atof?
-	split = ft_strsplit(line, ' ');
-	if (ft_count_words(line, ' ') != 4)
-		return ; //Error
-	dest->x = atof(split[1]);
-	dest->y = atof(split[2]);
-	dest->z = atof(split[3]);
-	free(split);
-}
-
-void	parse_face(int face[4], char *line)
-{
-	char	**split;
-
-	//rewrite atof?
 	split = ft_strsplit(line, ' ');
 	if (ft_count_words(line, ' ') != 5)
-		return ; //Error
+		ft_error("Invalid model file");
 	face[0] = ft_atoi(split[1]);
 	face[1] = ft_atoi(split[2]);
 	face[2] = ft_atoi(split[3]);
 	face[3] = ft_atoi(split[4]);
-	free(split);
+	if (face[0] < 0 || face[1] < 0 || face[2] < 0 || face[3] < 0 ||
+		face[0] >= m->face_count || face[1] >= m->face_count ||
+		face[2] >= m->face_count || face[3] >= m->face_count)
+		ft_error("Invalid model file");
+	ft_free_strsplit(line, split, ' ');
 }
 
 void	read_model(t_model *m, char *filename)
@@ -87,8 +76,22 @@ void	read_model(t_model *m, char *filename)
 		else if (buff[0] == 'v')
 			parse_float_trip(&m->vertices_origin[counts[1]++], buff);
 		else if (buff[0] == 'f')
-			parse_face(m->faces[counts[2]++], buff);
+			parse_face(m->faces[counts[2]++], buff, m);
+		free(buff);
 	}
+	free(buff);
+}
+
+void	trim_buff(char **buff)
+{
+	char		*tmp;
+
+	tmp = buff[0];
+	buff[0] = ft_strtrim(buff[0]);
+	free(tmp);
+	tmp = buff[1];
+	buff[1] = ft_strtrim(buff[1]);
+	free(tmp);
 }
 
 void	parse_model(t_data *d, t_list *list)
@@ -104,18 +107,18 @@ void	parse_model(t_data *d, t_list *list)
 		if (ft_strchr(list->content, '='))
 		{
 			buff = ft_strsplit(list->content, '=');
-			buff[0] = ft_strtrim(buff[0]);
-			buff[1] = ft_strtrim(buff[1]);
+			trim_buff(buff);
 			if (ft_strequ(buff[0], "model"))
 				read_model(model, buff[1]);
 			else if (ft_strequ(buff[0], "scale"))
-				model->scale = atof(buff[1]); //write own atof?
-			free(buff);
+				model->scale = ft_atof(buff[1]);
+			ft_free_strsplit(list->content, buff, '=');
 		}
 		list = list->next;
 	}
 	update_model(model);
 	ret = ft_lstnew(model, sizeof(t_model));
+	free(model);
 	ret->content_size = MODEL;
 	ft_lstadd(&d->s->objects, ret);
 }

@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 19:26:41 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 02:51:59 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 08:20:35 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	parse_triple(char *triple, t_vec3 *ref)
 	ref->x = ft_atoi(buff[0]);
 	ref->y = ft_atoi(buff[1]);
 	ref->z = ft_atoi(buff[2]);
+	ft_free_strsplit(triple, buff, ',');
 }
 
 void	set_scene(t_data *d, char **buff)
@@ -46,7 +47,9 @@ void	set_scene(t_data *d, char **buff)
 
 void	parse_scene(t_data *d, t_list *list)
 {
-	char **buff;
+	char	**buff;
+	int		x;
+	char	*tmp;
 
 	if (!d->s)
 		d->s = (t_scene *)ft_memalloc(sizeof(t_scene));
@@ -55,10 +58,15 @@ void	parse_scene(t_data *d, t_list *list)
 		if (ft_strchr(list->content, '='))
 		{
 			buff = ft_strsplit(list->content, '=');
+			tmp = buff[0];
 			buff[0] = ft_strtrim(buff[0]);
+			free(tmp);
+			tmp = buff[1];
 			buff[1] = ft_strtrim(buff[1]);
+			free(tmp);
 			set_scene(d, buff);
-			free(buff);
+			x = -1;
+			ft_free_strsplit(list->content, buff, '=');
 		}
 		list = list->next;
 	}
@@ -98,11 +106,21 @@ void	parse_file(t_data *d, char *filename)
 	fd = open(filename, O_RDONLY);
 	list = NULL;
 	while ((result = ft_get_next_line(fd, &buff)) > 0)
+	{
 		ft_lst_add_back(&list, ft_lstnew(buff, ft_strlen(buff) + 1));
+		free(buff);
+	}
+	free(buff);
 	if (result < 0)
 		ft_error_unknown();
-	if (!d->s)
-		d->s = (t_scene *)ft_memalloc(sizeof(t_scene));
 	parse_list(d, list);
+	while (list)
+	{
+		buff = (char *)list;
+		list = list->next;
+		free(((t_list *)buff)->content);
+		free(buff);
+	}
+	validate_scene(d);
 	close(fd);
 }
