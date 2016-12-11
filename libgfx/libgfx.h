@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:53:58 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 09:16:25 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <pthread.h>
 # define ABS(x) ((x > 0) ? x : x * -1)
 # define SQ(x) (x * x)
+# define CLAMP(x, lo, hi) MAX(MIN(x, hi), lo)
 
 enum			e_material
 {

@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 15:35:03 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:43:36 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 09:07:57 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	list_bonuses(void)
 		Modifying Objects\n\
 		Printing Debug Info\n\
 	Reflections\n\
-		Lambertion Shading\n\
+		Lambertian Shading\n\
 		Blinn-Phong Shading\n\
 	Refractions\n\
 		Density\n\
@@ -33,7 +33,7 @@ void	list_bonuses(void)
 		Marble Material\n\
 		Bump Mapping\n\
 	Triangle Intersections\n\
-	Model Input");
+	Model (Parsed .OBJ) Input");
 }
 
 void	display_usage(char *av)

@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 17:14:06 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:11:34 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/11 09:17:28 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ void	parser_set_props(char **buff, t_props *props)
 	else if (ft_strequ(buff[0], "color"))
 		parse_color(buff[1], &props->color);
 	else if (ft_strequ(buff[0], "reflect"))
-		props->reflect = (float)ft_atoi(buff[1]) / 100;
+		props->reflect = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
 	else if (ft_strequ(buff[0], "gloss"))
-		props->gloss = (float)ft_atoi(buff[1]) / 100;
+		props->gloss = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
 	else if (ft_strequ(buff[0], "transparency"))
-		props->trans = (float)ft_atoi(buff[1]) / 100;
+		props->trans = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
 	else if (ft_strequ(buff[0], "density"))
-		props->density = (float)ft_atoi(buff[1]) / 100;
+		props->density = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
 	else if (ft_strequ(buff[0], "radiance"))
-		props->radiance = (float)ft_atoi(buff[1]) / 100;
+		props->radiance = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
 	else if (ft_strequ(buff[0], "bump"))
-		props->bump = (float)ft_atoi(buff[1]) / 100;
+		props->bump = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
 	else if (ft_strequ(buff[0], "material"))
 		set_material(buff, props);
 }
