@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 17:14:06 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 09:17:28 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/28 11:12:36 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parser_set_props(char **buff, t_props *props)
 	else if (ft_strequ(buff[0], "transparency"))
 		props->trans = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
 	else if (ft_strequ(buff[0], "density"))
-		props->density = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
+		props->density = (float)CLAMP(ft_atoi(buff[1]), 0, 250) / 100;
 	else if (ft_strequ(buff[0], "radiance"))
 		props->radiance = (float)CLAMP(ft_atoi(buff[1]), 0, 100) / 100;
 	else if (ft_strequ(buff[0], "bump"))

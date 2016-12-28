@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 20:13:13 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 09:20:34 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/28 11:12:32 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	set_props_2(char **s, t_sphere *obj)
 	else if (ft_strequ(s[2], "trans"))
 		obj->props.trans = (float)CLAMP(ft_atoi(s[3]), 0, 100) / 100;
 	else if (ft_strstr(s[2], "density"))
-		obj->props.density = (float)CLAMP(ft_atoi(s[3]), 0, 100) / 100;
+		obj->props.density = (float)CLAMP(ft_atoi(s[3]), 0, 250) / 100;
 	else if (ft_strstr(s[2], "bump"))
 		obj->props.bump = (float)CLAMP(ft_atoi(s[3]), 0, 100) / 100;
 	else

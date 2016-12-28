@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 19:26:41 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:20:35 by mhurd            ###   ########.fr       */
+/*   Updated: 2016/12/17 16:33:39 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	parse_triple(char *triple, t_vec3 *ref)
 void	set_scene(t_data *d, char **buff)
 {
 	if (ft_strequ(buff[0], "name"))
-		d->s->name = buff[1];
+		d->s->name = ft_strdup(buff[1]);
 	else if (ft_strequ(buff[0], "width"))
 		d->s->size.x = ft_atoi(buff[1]);
 	else if (ft_strequ(buff[0], "height"))
