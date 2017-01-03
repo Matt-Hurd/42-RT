@@ -38,4 +38,12 @@ Once loaded up, RT accepts basic arrow key and numpad input to control the camer
 
 ### Images
 
-![RT](http://i.imgur.com/pEeEJua.png)
+![Mirrors](http://i.imgur.com/pEeEJua.png)
+
+![Models](http://i.imgur.com/am0rMod.png)
+
+![Shrek](http://i.imgur.com/1g5clE1.png)
+
+![Marble](http://i.imgur.com/sWaQLFg.png)
+
+![Bump Maps](http://i.imgur.com/NjneQVT.png)
