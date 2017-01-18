@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 08:26:12 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:34:59 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/01/18 00:29:35 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ double	ft_atof(const char *str)
 		c++;
 	if (*c == '.')
 		c++;
+    if (ft_strlen(c) > 9)
+        c[9] = 0;
 	res2 = (double)ft_atoi(c);
 	len = ft_strlen(c);
 	while (len--)

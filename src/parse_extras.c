@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/23 04:07:27 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:49:14 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/01/18 00:32:27 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	parse_float_trip(t_vec3 *dest, char *line)
 	split = ft_strsplit(line, ' ');
 	if (ft_count_words(line, ' ') != 4)
 		ft_error("Invalid float triple");
-	dest->x = ft_atof(split[1]);
-	dest->y = ft_atof(split[2]);
-	dest->z = ft_atof(split[3]);
+	dest->x = atof(split[1]);
+	dest->y = atof(split[2]);
+	dest->z = atof(split[3]);
 	ft_free_strsplit(line, split, ' ');
 }
 
