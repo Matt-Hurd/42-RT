@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:48:11 by mhurd             #+#    #+#             */
-/*   Updated: 2017/02/20 22:19:25 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/05 13:26:04 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int		parse_misc(char **split, int c, t_data *d)
 	{
 		if (ft_strequ(split[0], "aa"))
 			d->s->aa = ft_atoi(split[1]);
+		if (ft_strequ(split[0], "sepia"))
+			d->s->sepia = ft_atoi(split[1]);
 		if (ft_strequ(split[0], "ambient"))
 			d->s->ambient = CLAMP((float)ft_atoi(split[1]) / 100, -0.20, 1.20);
 		else if (ft_strequ(split[0], "depth"))

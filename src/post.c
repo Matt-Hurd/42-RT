@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 23:18:37 by mhurd             #+#    #+#             */
-/*   Updated: 2016/10/29 06:05:28 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/05 13:26:58 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ t_rgb	*anti_alias(t_data *d, int y, int x, t_rgb *new)
 	return (new);
 }
 
+t_rgb	*sepia(t_data *d, int y, int x, t_rgb *new)
+{
+	new->r = d->image[y][x].r;
+	new->g = d->image[y][x].g;
+	new->b = d->image[y][x].b;
+	new->r += 112.0 / 255;
+	new->g += 66.0 / 255;
+	new->b += 20.0 / 255;
+	new->r /= 2;
+	new->g /= 2;
+	new->b /= 2;
+	return (new);
+}
+
 void	post_process(t_data *d)
 {
 	int		x;
@@ -53,6 +67,8 @@ void	post_process(t_data *d)
 		{
 			if (d->s->aa == 1)
 				anti_alias(d, y, x, &new);
+			else if (d->s->sepia == 1)
+				sepia(d, y, x, &new);
 			else
 				new = d->image[y][x];
 			put_pixel(d, x, y, new);

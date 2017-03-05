@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2017/03/04 22:57:23 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/05 13:25:24 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ typedef struct	s_scene
 	int		count;
 	char	aa;
 	float	ambient;
+	char	sepia;
 }				t_scene;
 
 typedef struct	s_data

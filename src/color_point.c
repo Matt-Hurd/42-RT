@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 23:43:48 by mhurd             #+#    #+#             */
-/*   Updated: 2017/03/04 23:01:29 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/05 13:32:35 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ float			handle_mats(t_recurse *rec)
 		return (1 - calc_noise_coef(rec) / 4);
 	if (((t_sphere *)rec->closest->content)->props.material == MAT_CHECKERED)
 	{
-		if ((int)fabs(rec->r.start.x + 1234567) % 10 > 5
-		 	^ (int)fabs(rec->r.start.y + 1234567) % 10 > 5)
+		if ((int)fabs(rec->r.start.x + 1234567) % 10 > 5 ^
+			(int)fabs(rec->r.start.y + 1234567) % 10 > 5)
 			return (0.5);
 		return (1);
 	}
@@ -65,7 +65,7 @@ float			handle_mats(t_recurse *rec)
 		temp = (fmod(fabs(rec->r.start.x + 1234567), 10)) / 10;
 		if (temp < 0.5)
 			temp = 1 - temp;
-		return temp;
+		return (temp);
 	}
 	else
 		return (1);
