@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:35:41 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 03:10:46 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/02/20 22:17:10 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_sphere_info(t_sphere *sphere)
 {
 	ft_putendl("[sphere]");
-	ft_putstr("Radius: ");
+	ft_putstr("	Radius: ");
 	ft_putnbr(sphere->radius);
 	ft_putendl("");
 	print_properties(sphere->props);
@@ -30,7 +30,7 @@ void	print_plane_info(t_plane *plane)
 void	print_cone_info(t_cone *cone)
 {
 	ft_putendl("[cone]");
-	ft_putstr("Radius: ");
+	ft_putstr("	Radius: ");
 	ft_putnbr(cone->radius);
 	ft_putendl("");
 	print_properties(cone->props);
@@ -39,7 +39,7 @@ void	print_cone_info(t_cone *cone)
 void	print_cylinder_info(t_cylinder *cylinder)
 {
 	ft_putendl("[cylinder]");
-	ft_putstr("Radius: ");
+	ft_putstr("	Radius: ");
 	ft_putnbr(cylinder->radius);
 	ft_putendl("");
 	print_properties(cylinder->props);

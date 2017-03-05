@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:35:53 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 03:11:36 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/02/20 22:17:53 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,31 @@ void	print_rgb(t_rgb rgb)
 
 void	print_properties(t_props p)
 {
-	ft_putstr("Pos: ");
+	ft_putstr("	Pos: ");
 	print_vec3(p.pos, 1);
-	ft_putstr("Rot: ");
+	ft_putstr("	Rot: ");
 	print_vec3(p.rot, (180.0 / M_PI));
-	ft_putstr("Color: ");
+	ft_putstr("	Color: ");
 	print_rgb(p.color);
-	ft_putstr("Reflectivity:");
+	ft_putstr("	Reflectivity:");
 	ft_putnbr(p.reflect * 100);
-	ft_putstr("\nRadiance:");
+	ft_putstr("\n	Radiance:");
 	ft_putnbr(p.radiance * 100);
-	ft_putstr("\nTranslucency:");
+	ft_putstr("\n	Translucency:");
 	ft_putnbr(p.trans * 100);
-	ft_putstr("\nDensity:");
+	ft_putstr("\n	Density:");
 	ft_putnbr(p.density * 100);
 	ft_putchar('\n');
+}
+
+void	print_scene(t_data *d)
+{
+	ft_putstr("[Scene]\n");
+	ft_putstr("	Ambient Light: ");
+	ft_putnbr(d->s->ambient * 100);
+	ft_putstr("\n	Anti-Aliasing: ");
+	ft_putnbr(d->s->aa);
+	ft_putstr("\n");
 }
 
 void	print_scene_info(t_data *d)
@@ -60,6 +70,7 @@ void	print_scene_info(t_data *d)
 
 	x = 0;
 	a = d->s->objects;
+	print_scene(d);
 	while (a)
 	{
 		ft_putnbr(++x);

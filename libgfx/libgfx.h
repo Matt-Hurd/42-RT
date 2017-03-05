@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:42:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 09:16:25 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/04 22:57:23 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@
 enum			e_material
 {
 	MAT_NONE,
-	MAT_MARBLE
+	MAT_MARBLE,
+	MAT_CHECKERED,
+	MAT_RIPPLE
 };
 
 typedef struct	s_rgb
@@ -148,6 +150,7 @@ typedef struct	s_scene
 	int		maxdepth;
 	int		count;
 	char	aa;
+	float	ambient;
 }				t_scene;
 
 typedef struct	s_data

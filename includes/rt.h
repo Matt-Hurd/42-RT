@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/08 16:06:16 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:49:29 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/04 23:09:15 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,6 @@ void			update_model(t_model *m);
 void			validate_scene(t_data *d);
 
 int				set_props(char **s, t_sphere *obj);
+void			color_ambient(float ambient, t_recurse *rec);
+float			handle_mats(t_recurse *rec);
 #endif

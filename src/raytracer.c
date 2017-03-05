@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 22:42:52 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/18 09:12:38 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/04 23:09:04 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ void	ray_trace(t_data *d, t_recurse *rec)
 	}
 	if (rec->closest)
 	{
-		rec->lit = 0;
+		rec->lit = d->s->ambient;
+		color_ambient(d->s->ambient, rec);
 		find_light(d, t, rec);
 		if (rec->depth++ < d->s->maxdepth && rec->coef > 0 && rec->lit)
 			ray_trace(d, rec);
 	}
 }
 
-void	bump_map(t_vec3 *n, t_props props, t_vec3 hit)
+void	bump_map(t_vec3 *n, t_props props, t_vec3 hit, t_recurse *rec)
 {
 	float noise_x;
 	float noise_y;
@@ -43,18 +44,23 @@ void	bump_map(t_vec3 *n, t_props props, t_vec3 hit)
 
 	if (props.bump > 0)
 	{
-		noise_x = noise(0.1 * hit.x,
-			0.1 * hit.y, 0.1 * hit.z);
-		noise_y = noise(0.1 * hit.y,
-			0.1 * hit.z, 0.1 * hit.x);
-		noise_z = noise(0.1 * hit.z,
-			0.1 * hit.x, 0.1 * hit.y);
+		if (props.material != MAT_RIPPLE)
+		{
+			noise_x = noise(0.1 * hit.x,
+				0.1 * hit.y, 0.1 * hit.z);
+			noise_y = noise(0.1 * hit.y,
+				0.1 * hit.z, 0.1 * hit.x);
+			noise_z = noise(0.1 * hit.z,
+				0.1 * hit.x, 0.1 * hit.y);
+			n->y = (1.0f - props.bump)
+				* n->y + props.bump * noise_y;
+			n->z = (1.0f - props.bump)
+				* n->z + props.bump * noise_z;
+		}
+		else
+			noise_x = handle_mats(rec);
 		n->x = (1.0f - props.bump)
 			* n->x + props.bump * noise_x;
-		n->y = (1.0f - props.bump)
-			* n->y + props.bump * noise_y;
-		n->z = (1.0f - props.bump)
-			* n->z + props.bump * noise_z;
 		normalize_vector(n);
 	}
 }
@@ -70,7 +76,8 @@ void	find_light(t_data *d, float t, t_recurse *rec)
 	normal_shape(&rec->r, &rec->n, rec->closest, 0);
 	curr = d->s->objects;
 	rec->light = 0;
-	bump_map(&rec->n, ((t_sphere *)rec->closest->content)->props, rec->r.start);
+	bump_map(&rec->n, ((t_sphere *)rec->closest->content)->props, rec->r.start,
+		rec);
 	if (((t_sphere *)rec->closest->content)->props.trans > 0)
 		rec->coef *= handle_trans(d, rec);
 	while (curr)

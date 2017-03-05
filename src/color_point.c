@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 23:43:48 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 04:30:24 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/04 23:01:29 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,39 @@ static float	calc_noise_coef(t_recurse *rec)
 	return (noise_coef);
 }
 
+float			handle_mats(t_recurse *rec)
+{
+	float temp;
+
+	if (((t_sphere *)rec->closest->content)->props.material == MAT_MARBLE)
+		return (1 - calc_noise_coef(rec) / 4);
+	if (((t_sphere *)rec->closest->content)->props.material == MAT_CHECKERED)
+	{
+		if ((int)fabs(rec->r.start.x + 1234567) % 10 > 5
+		 	^ (int)fabs(rec->r.start.y + 1234567) % 10 > 5)
+			return (0.5);
+		return (1);
+	}
+	if (((t_sphere *)rec->closest->content)->props.material == MAT_RIPPLE)
+	{
+		temp = (fmod(fabs(rec->r.start.x + 1234567), 10)) / 10;
+		if (temp < 0.5)
+			temp = 1 - temp;
+		return temp;
+	}
+	else
+		return (1);
+}
+
 void			color_point(t_recurse *rec)
 {
 	float	lambert;
 	float	blinn;
-	float	noise_coef;
 
 	rec->lit = 1;
 	lambert = dot_vect(&rec->light_ray.dir, &rec->n);
-	if (((t_sphere *)rec->closest->content)->props.material == MAT_MARBLE)
-	{
-		noise_coef = calc_noise_coef(rec);
-		lambert *= 1 - noise_coef / 4;
-	}
+	if (((t_sphere *)rec->closest->content)->props.material != MAT_NONE)
+		lambert *= handle_mats(rec);
 	rec->light += lambert;
 	blinn = calc_blinn(rec);
 	lambert += blinn;
@@ -71,5 +91,19 @@ void			color_point(t_recurse *rec)
 	rec->color.g += lambert * rec->light_ray.color.g *
 		((t_sphere *)rec->closest->content)->props.color.g;
 	rec->color.b += lambert * rec->light_ray.color.b *
+		((t_sphere *)rec->closest->content)->props.color.b;
+}
+
+void			color_ambient(float ambient, t_recurse *rec)
+{
+	float	lambert;
+
+	lambert = ambient;
+	lambert *= rec->coef;
+	rec->color.r += lambert *
+		((t_sphere *)rec->closest->content)->props.color.r;
+	rec->color.g += lambert *
+		((t_sphere *)rec->closest->content)->props.color.g;
+	rec->color.b += lambert *
 		((t_sphere *)rec->closest->content)->props.color.b;
 }

@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 19:26:41 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/17 16:33:39 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/02/20 22:20:07 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	set_scene(t_data *d, char **buff)
 		d->s->aa = ft_atoi(buff[1]);
 	else if (ft_strequ(buff[0], "depth"))
 		d->s->maxdepth = ft_atoi(buff[1]);
+	else if (ft_strequ(buff[0], "ambient"))
+		d->s->ambient = CLAMP((float)ft_atoi(buff[1]) / 100, -0.20, 1.20);
 }
 
 void	parse_scene(t_data *d, t_list *list)

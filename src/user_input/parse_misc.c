@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 16:48:11 by mhurd             #+#    #+#             */
-/*   Updated: 2016/11/19 04:30:15 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/02/20 22:19:25 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	display_help(void)
 	ft_putstr("Valid commands: \n\
 	aa on/off\n\
 		Enables/Disables AntiAliasing\n\
+	ambient [0 - 100]\n\
+		Set the intensity of ambient light\n\
 	depth [num]\n\
 		Set the max recursion depth\n\
 	set [objnum] [prop] [value]\n\
@@ -41,6 +43,8 @@ int		parse_misc(char **split, int c, t_data *d)
 	{
 		if (ft_strequ(split[0], "aa"))
 			d->s->aa = ft_atoi(split[1]);
+		if (ft_strequ(split[0], "ambient"))
+			d->s->ambient = CLAMP((float)ft_atoi(split[1]) / 100, -0.20, 1.20);
 		else if (ft_strequ(split[0], "depth"))
 			d->s->maxdepth = ft_atoi(split[1]);
 		else

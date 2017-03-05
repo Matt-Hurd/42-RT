@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 17:14:06 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/28 11:12:36 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/04 22:56:08 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	set_material(char **buff, t_props *props)
 {
 	if (ft_strequ(buff[1], "marble"))
 		props->material = MAT_MARBLE;
+	if (ft_strequ(buff[1], "checkered"))
+		props->material = MAT_CHECKERED;
+	if (ft_strequ(buff[1], "ripple"))
+		props->material = MAT_RIPPLE;
 }
 
 void	parser_set_props(char **buff, t_props *props)

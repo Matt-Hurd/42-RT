@@ -6,7 +6,7 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 20:13:13 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/28 11:12:32 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/04 22:55:49 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,17 @@ static int	set_props_mat(char **s, t_sphere *obj)
 	if (ft_strequ(s[2], "material"))
 	{
 		if (ft_strequ(s[3], "marble"))
-		{
 			obj->props.material = MAT_MARBLE;
-			return (1);
-		}
+		else if (ft_strequ(s[3], "checkered"))
+			obj->props.material = MAT_CHECKERED;
+		else if (ft_strequ(s[3], "ripple"))
+			obj->props.material = MAT_RIPPLE;
 		else
+		{
 			obj->props.material = MAT_NONE;
+			return (0);
+		}
+		return (1);
 	}
 	return (0);
 }
