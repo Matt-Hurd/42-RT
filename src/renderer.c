@@ -6,16 +6,11 @@
 /*   By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 04:47:42 by mhurd             #+#    #+#             */
-/*   Updated: 2016/12/11 08:20:47 by mhurd            ###   ########.fr       */
+/*   Updated: 2017/03/05 14:56:44 by mhurd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-/*
-**TODO:
-**	Check error handling for all input files
-*/
 
 void	*do_recurse(void *args)
 {
@@ -39,6 +34,7 @@ void	*do_recurse(void *args)
 			regular_pixel(a, point, rec);
 		a->d->image[(z / a->d->s->size.x)][(z % a->d->s->size.x)] = rec->color;
 		a->d->s->count++;
+		print_progress(a);
 	}
 	free(rec);
 	free(args);
@@ -52,6 +48,7 @@ void	draw_screen(t_data *d)
 	t_args	*a;
 
 	x = -1;
+	d->drawn = 0;
 	while (++x < d->thread_count)
 	{
 		a = (t_args *)ft_memalloc(sizeof(t_args));
@@ -91,6 +88,7 @@ void	draw_reload(t_data *d)
 	while (++x < d->thread_count)
 		pthread_join(d->render_threads[x], NULL);
 	post_process(d);
+	clear_loading();
 	mlx_put_image_to_window(d->mlx, d->win, d->img, 0, 0);
 	d->drawing = 0;
 }

@@ -6,7 +6,7 @@
 #    By: mhurd <mhurd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 19:34:56 by mhurd             #+#    #+#              #
-#    Updated: 2017/01/18 16:00:01 by mhurd            ###   ########.fr        #
+#    Updated: 2017/03/05 14:48:40 by mhurd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC		= main.c \
 		  ssaa.c \
 		  perlin.c \
 		  update_model.c \
+			progress.c \
 		  /user_input/user_input.c \
 		  /user_input/print_objects.c \
 		  /user_input/print_model.c \
