@@ -26,7 +26,7 @@ Once loaded up, RT accepts basic arrow key and numpad input to control the camer
     - Lambertian Shading
     - Blinn-Phong Shading
  - Refractions
- -     Density
+    - Density
  - Transparency
  - Anti-Aliasing
  - Supersampling
